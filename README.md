@@ -15,3 +15,7 @@ artist_comp() - This function will compare number of plays on Spotify for songs 
 label_comp() - This function will compare number of plays on Spotify for songs by the user-provided record label, or songs not associated with a record label, with number of YouTube music video views for songs with the same record label (or also unassociated with a label).
 
 year_comp() - This function will compare number of plays on Spotify for songs released in the user-provided year with number of YouTube music video views for songs released in that year.
+
+Jericho's feedback: I think the theme to this package is great... as someone who enjoys music myself! The APIs will be the biggest initial hurdle, but once you're able to access the data from both sources successfully, then all of those functions you've described will need to be fleshed out. For the comp() functions, it's possible you might have them displayed in some sort of table (through the use of some tidyr functions inside your functions.) It might be interesting to look at the play counts of these songs over time, if that variable does exist. 
+
+I think there's a lot of potential with this package, and the functions you've specified are a good start. You are all good to continue!
