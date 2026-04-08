@@ -7,7 +7,7 @@
 match_spotify_song(url)
 }
 \arguments{
-\item{url}{}
+\item{url}{Link to Spotify song, including `"https://"` at beginning.}
 }
 \description{
 Matches Spotify song to corresponding YouTube music video
