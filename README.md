@@ -1,17 +1,32 @@
-Our package, SpoTubeR, will attempt to match Spotify and YouTube song data, then compare Spotify song characteristics with YouTube music video characteristics (e.g. number of plays). Thus, we will explore compelling questions about how a song may be matched between Spotify and YouTube using Spotify API data (retrieved through the spotifyr package) and YouTube API data (retrieved through the tuber package), generating match scores to provide the confidence with which a song is matched between Spotify and YouTube. We will also explore compelling questions about how songs across different genres, by different artists, associated with different record labels, or released on different years may generate more or less popular music videos on YouTube in comparison with the song's popularity on Spotify.
+## Overview
 
-Our package will be helpful for people learning to use R who are interested in music and wanting to explore data relevant to this interest. It will also be useful for more serious scholars of music data science, those who want to explore user engagement with different platforms, and music industry executives interested in evaluating the success of different music videos. Finally, SpoTubeR could be inspiring for those developing match algorithms similar to our algorthm matching YouTube music videos with their corresponding Spotify songs.
+SpoTubeR is a package which combines data from the R wrappers spotifyr and tuber to match a given Spotify song with an associated YouTube music video. When given a Spotify Song or YouTube Music video, SpoTubeR generates a 'match score' equating to its confidence that the songs are a match. SpoTuber can also be used to explore compelling questions about how songs across different genres, by different artists, associated with different record labels, or released on different years may generate more or less popular music videos on YouTube in comparison with the song's popularity on Spotify.
 
-Outline:
+## Installation
+devtools::install_github('Skotkin/SpoTubeR')
 
-match_yt_song() - This function will take a YouTube music video URL as an argument and return its most likely corresponding Spotify song URL, a match confidence score representing SpoTubeR's confidence in the accuracy of the match, and the song's number of views on YouTube and plays on Spotify.
+## Authentication
+For Spotify API: 
 
-match_spotify_song() - This function will take a Spotify song URL as an argument and return its most likely corresponding YouTube music video URL, a match confidence score representing SpoTubeR's confidence in the accuracy of the match, and the song's number of views on YouTube and plays on Spotify.
+First, set up a Dev account with Spotify to access their Web API (see <https://developer.spotify.com/my-applications/#!/applications>). This will give you your Client ID and Client Secret. Once you have those, you can pull your access token into R with get_spotify_access_token().
 
-genre_comp() - This function will compare number of plays on Spotify for songs in the user-provided genre with number of YouTube music video views for songs in that genre.
+The easiest way to authenticate is to set your credentials to the System Environment variables SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET. The default arguments to get_spotify_access_token() (and all other functions in this package) will refer to those. Alternatively, you can set them manually and make sure to explicitly refer to your access token in each subsequent function call.
 
-artist_comp() - This function will compare number of plays on Spotify for songs by the user-provided artist with number of YouTube music video views for songs by that artist.
+Sys.setenv(SPOTIFY_CLIENT_ID = 'xxxxxxxxxxxxxxxxxxxxx')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = 'xxxxxxxxxxxxxxxxxxxxx')
 
-label_comp() - This function will compare number of plays on Spotify for songs by the user-provided record label, or songs not associated with a record label, with number of YouTube music video views for songs with the same record label (or also unassociated with a label).
+access_token <- get_spotify_access_token()
 
-year_comp() - This function will compare number of plays on Spotify for songs released in the user-provided year with number of YouTube music video views for songs released in that year.
+For YouTube API: 
+
+First, get the application id and password from the Google Developer Console (see https://developers.google.com/youtube/v3/getting-started). Enable all the YouTube APIs. Then set the application id and password via the yt_oauth function. For more information about YouTube OAuth, see YouTube OAuth Guide (<https://developers.google.com/youtube/v3/guides/authentication>).
+
+yt_oauth("app_id", "app_password")
+
+## Examples
+
+
+
+
+## License
+Scripts are released under the MIT License
