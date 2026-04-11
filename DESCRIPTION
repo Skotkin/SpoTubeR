@@ -1,12 +1,11 @@
 Package: SpoTubeR
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Authors: c(person("Úna", "Gogstetter", email = "ugogstetter@smith.edu", role = c("aut", "cre")), 
-person("Samantha", "Kotkin", email = "skotkin@smith.edu", role = c("aut", "cre"))
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Title: Match Spotify Songs with YouTube Music Videos
+Authors@R: c(
+person("Úna", "Gogstetter", email = "ugogstetter@smith.edu", role = c("aut", "cre")), 
+person("Samantha", "Kotkin", email = "skotkin@smith.edu", role = c("aut", "cre")))
+Maintainer: <skotkin@smith.edu>
+Description: Match Spotify songs with their existing YouTube music videos and compare their characteristics. Get information about their genres, popularity, record labels, release years, and more. To learn more about the Spotify API, see <https://developer.spotify.com/documentation/web-api/>. To learn more about the YouTube API, see <https://developers.google.com/youtube/v3/>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
