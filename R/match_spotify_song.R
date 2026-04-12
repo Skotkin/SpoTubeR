@@ -2,20 +2,30 @@
 #'
 #' @param url Link to Spotify song, including `"https://"` at beginning.
 #'
-#' @returns
+#' @returns This function returns a list containing the Spotify popularity score,
+#'  corresponding YouTube video view count, and match confidence score (i.e. the
+#'   confidence that the correct YouTube video was matched to the given Spotify
+#'    song).
 #' @export
 #'
 #' @examples
 
 match_spotify_song <- function(url) {
 
-spotify_track <- spotifyr::get_track(substr(url, 32, nchar(url)))
+  output <- song_match(url)
 
-tuber_match <- tuber::yt_search(term = paste(spotify_track$name, spotify_track$artists$name, spotify_track$album$name))[1,]
+  if (output$matched == FALSE) {
 
-day_match <- ifelse(spotify_track$album$release_date == tuber_match$publishedAt, TRUE, FALSE)
+    message(paste("No potential YouTube video match was found for", spotify_track$name, "by", ifelse(length(spotify_track$artists$name) == 1, spotify_track$artists$name, paste(spotify_track$artists$name, collapse = "and")), "on Spotify."))
 
-month_match <- ifelse(substr(spotify_track$album$release_date, 1, 7) == substr(tuber_match$publishedAt, 1, 7), TRUE, FALSE)
+  }
 
-year_match <- ifelse(substr(spotify_track$album$release_date, 1, 4) == substr(tuber_match$publishedAt, 1, 4), TRUE, FALSE)
+  if (output$matched == TRUE) {
+
+    message(paste("Returning statistics for YouTube video corresponding to", spotify_track$name, "by", ifelse(length(spotify_track$artists$name) == 1, spotify_track$artists$name, paste(spotify_track$artists$name, collapse = "and")), "on Spotify."))
+
+    message(paste0("YouTube video was identified as ", tuber_match$title, " on the channel ", tuber_match$channelTitle, "."))
+}
+
+return(output$final_list)
 }
