@@ -90,6 +90,7 @@ get_yt_matches <- function(top_tracks) {
 
     matches[nrow(matches)+1,] <- matches1
   }
+
   return(matches)
 }
 

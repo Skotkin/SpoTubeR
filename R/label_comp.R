@@ -1,4 +1,4 @@
-#' (NOT WORKING YET) Compares given label's popularity on Spotify with its popularity on YouTube
+#' Compares given label's popularity on Spotify with its popularity on YouTube
 #'
 #' This function takes a record label name as an argument and returns a list
 #' with data comparing the popularity, between Spotify and YouTube, of the
@@ -29,7 +29,8 @@
 
 label_comp <- function(label) {
 
-  artists <- spotifyr::get_label_artists(label, limit = 5)
+  # am using capture.output to suppress the print output that would otherwise be produced
+  capture.output(artists <- spotifyr::get_label_artists(label, limit = 5))
 
   if (nrow(artists) == 0) {
 
@@ -60,7 +61,7 @@ label_comp <- function(label) {
       dplyr::mutate(spotify_popularity_rank = rank(dplyr::desc(matches$spotify_popularity_score), ties.method = "min"),
                     youtube_views_rank = rank(dplyr::desc(matches$youtube_view_count), ties.method = "min"))
 
-    matches_all[i] <- matches
+    matches_all[i] <- list(matches)
 
     confident_match_all[i] <- confident_match
 
@@ -70,14 +71,14 @@ label_comp <- function(label) {
   # for each artist, matching most confidently matched YouTube channel ID with a YouTube channel and retrieving number of subscribers
   channel_stats <- tuber::get_channel_stats(confident_match_all, auth = "key")
 
-  for (i in nrow(artists)) {
+  for (i in 1:nrow(artists)) {
 
     message(paste0("Retrieving YouTube subscriber count associated with ", channel_stats$title[i], "."))
 
     yt_subscribers <- ifelse(channel_stats$subscriber_count_hidden[i] == FALSE, channel_stats$subscriber_count[i], NA)
 
-    output[i] <- list(list("Artist's Spotify popularity score (0-100)" = artists$popularity[i], "Artist's Spotify follower count" = artists$followers.total[i], "Artist's YouTube channel subscriber count" = yt_subscribers),
-                      "Artist's top Spotify songs" = matches_all[i])
+    output[i] <- list(list(list("Artist's Spotify popularity score (0-100)" = artists$popularity[i], "Artist's Spotify follower count" = artists$followers.total[i], "Artist's YouTube channel subscriber count" = yt_subscribers),
+                      "Artist's top Spotify songs" = matches_all[i]))
   }
 
   names(output) <- output_names
