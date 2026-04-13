@@ -1,5 +1,5 @@
 ---
-title: "my-vignette"
+title: "SpoTubeR-vignette"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{my-vignette}
@@ -17,3 +17,31 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(SpoTubeR)
 ```
+
+
+
+## Data: billboard100_apr26
+
+To explore the basic functions inside of SpoTubeR, we'll use a dataset containing billboard's 100 most popular current songs on April 26th, 2026. 
+
+```{r}
+
+```
+
+### Match Spotify songs to their artist's YouTube music video with match_spotify_song
+```{r}
+
+```
+
+### Match YouTube music videos to their artist's Spotify song with match_yt_song
+```{r}
+
+```
+
+
+### Compare artists' content on Spotify and YouTube with artist_comp()
+```{r}
+
+```
+
+### 

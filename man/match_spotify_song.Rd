@@ -9,6 +9,12 @@ match_spotify_song(url)
 \arguments{
 \item{url}{Link to Spotify song, including `"https://"` at beginning.}
 }
+\value{
+This function returns a list containing the Spotify popularity score,
+ corresponding YouTube video view count, and match confidence score (i.e. the
+  confidence that the correct YouTube video was matched to the given Spotify
+   song).
+}
 \description{
 Matches Spotify song to corresponding YouTube music video
 }
