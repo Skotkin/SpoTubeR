@@ -9,6 +9,19 @@ match_spotify_song(url)
 \arguments{
 \item{url}{Link to Spotify song, including `"https://"` at beginning.}
 }
+\value{
+This function returns a list containing the Spotify popularity score,
+ corresponding YouTube video view count, and match confidence score (i.e. the
+  confidence that the correct YouTube video was matched to the given Spotify
+   song).
+}
 \description{
-Matches Spotify song to corresponding YouTube music video
+Takes a Spotify song URL and returns a list with data comparing the song's
+popularity between Spotify and YouTube. Before running this
+ function, make sure you've set your API credentials using [auth_creds()].
+}
+\examples{
+# remember you must set up your API credentials with [auth_creds()] before you can run examples
+# using Ordinary by Alex Warren
+match_spotify_song("https://open.spotify.com/track/6qqrTXSdwiJaq8SO0X2lSe?si=ba9ef90830b24d28")
 }

@@ -1,10 +1,15 @@
 #' Compares given artist's popularity on Spotify with their popularity on YouTube
 #'
+#' This function takes a Spotify artist profile URL as its argument and returns
+#' a list with data comparing the artist's popularity between Spotify and YouTube. Before running this
+#'  function, make sure you've set your API credentials using [auth_creds()].
+#'
 #' @param url Link to Spotify artist profile, including `"https://"` at beginning.
 #'
 #' @returns This function returns a list containing:
 #' *A list providing the given artist's overall popularity score on Spotify,
-#' total follower count on Spotify, and subscriber count on YouTube.
+#' total follower count on Spotify, and subscriber count on YouTube. (If YouTube
+#'  subscriber count is hidden, the value will appear as `NA`).
 #' *A data frame where each row represents one of
 #' the given artist's top songs on Spotify. There are columns for song name,
 #' Spotify popularity score, YouTube view count, match confidence score (i.e.
@@ -15,41 +20,34 @@
 #' @export
 #'
 #' @examples
+#' # remember you must set up your API credentials with [auth_creds()] before you can run examples
+#' # using Noah Kahan
+#' artist_comp("https://open.spotify.com/artist/2RQXRUsr4IW1f3mKyKsy4B?si=69yU_685T96XI2mWtOGfLg")
 
 artist_comp <- function(url) {
 
   spotify_artist <- spotifyr::get_artist(gsub("\\?.*", "", substr(url, 33, nchar(url))))
 
+  message(paste("Retrieving Spotify statistics associated with", spotify_artist$name, "and matching their top songs to YouTube videos."))
+
   top_tracks <- spotifyr::get_artist_top_tracks(spotify_artist$id)
 
-  matches <- data.frame(song_name = character(), spotify_popularity_score = numeric(), youtube_view_count = numeric(), match_confidence_score = numeric(), yt_channel = character())
+  matches <- get_yt_matches(top_tracks)
 
-  for (i in 1:nrow(top_tracks)) {
-
-    matches1 <- spotify_track(top_tracks$external_urls.spotify[i])
-
-    matches1 <- c(top_tracks$name[i], as.numeric(matches1$final_list$`Spotify popularity score (0-100)`), as.numeric(matches1$final_list$`Video view count on YouTube`), as.numeric(matches1$final_list$`Match confidence score (0-10)`), matches1$yt_channel)
-
-    matches[nrow(matches)+1,] <- matches1
-  }
-
-  # retrieving YouTube channel ID from the most confidently matched song (taking the first listed one if there are multiple with the same confidence score)
-  confident_match <- matches |>
-    dplyr::filter(match_confidence_score == max(match_confidence_score)) |>
-    head(1)
-
-  confident_match <- confident_match$yt_channel
+  confident_match <- get_confident_match_channel(matches)
 
   matches <- matches |>
-    dplyr::select(!yt_channel) |>
+    dplyr::select(!c(yt_channel, one_artist)) |>
     dplyr::mutate(spotify_popularity_rank = rank(dplyr::desc(matches$spotify_popularity_score), ties.method = "min"),
                   youtube_views_rank = rank(dplyr::desc(matches$youtube_view_count), ties.method = "min"))
 
   # matching most confidently matched YouTube channel ID with a YouTube channel and retrieving number of subscribers
-  channel_stats <- tuber::get_channel_stats(confident_match)
-  # add code to retrieve the specific subscriber count number from this and save it to yt_subscribers variable
+  channel_stats <- tuber::get_channel_stats(confident_match, auth = "key")
 
+  message(paste0("Retrieving YouTube subscriber count associated with ", channel_stats$title, "."))
 
-  return(list(list("Artist Spotify popularity score (0-100)" = spotify_artist$popularity, "Artist followers on Spotify" = spotify_artist$followers$total, "Artist YouTube channel subscriber count" = yt_subscribers),
-              "Artist's top 10 Spotify songs" = matches))
+  yt_subscribers <- ifelse(channel_stats$subscriber_count_hidden == FALSE, channel_stats$subscriber_count, NA)
+
+  return(list(list("Artist's Spotify popularity score (0-100)" = spotify_artist$popularity, "Artist's Spotify follower count" = spotify_artist$followers$total, "Artist's YouTube channel subscriber count" = yt_subscribers),
+              "Artist's top Spotify songs" = matches))
   }
