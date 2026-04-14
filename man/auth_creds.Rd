@@ -7,14 +7,20 @@
 auth_creds(spotify_id, spotify_secret, yt_client, yt_secret)
 }
 \arguments{
-\item{spotify_id}{Your Spotify API client ID.}
+\item{spotify_id}{Your Spotify API client ID (as character type).}
 
-\item{spotify_secret}{Your Spotify API client secret.}
+\item{spotify_secret}{Your Spotify API client secret (as character type).}
 
-\item{yt_key}{Your YouTube API key.}
+\item{yt_key}{Your YouTube API key (as character type).}
+}
+\value{
+This function does not return anything. It does provide a message
+informing the user that their credentials have been saved.
 }
 \description{
 This function must be run before the other SpoTubeR functions can be used.
+}
+\details{
 You will need to first sign up for a Spotify API account
 [here](https://developer.spotify.com/documentation/web-api) (requires a
 Spotify Premium subscription) and obtain an API key for the YouTube API

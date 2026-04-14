@@ -17,8 +17,11 @@ This function returns a list containing the Spotify popularity score,
 }
 \description{
 Takes a Spotify song URL and returns a list with data comparing the song's
-popularity between Spotify and YouTube. Before running this
- function, make sure you've set your API credentials using [auth_creds()].
+popularity between Spotify and YouTube.
+}
+\details{
+Before running this function, make sure you've set your API
+credentials using [auth_creds()].
 }
 \examples{
 # remember you must set up your API credentials with [auth_creds()] before you can run examples

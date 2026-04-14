@@ -11,10 +11,10 @@ artist_comp(url)
 }
 \value{
 This function returns a list containing:
-*A list providing the given artist's overall popularity score on Spotify,
+* A list providing the given artist's overall popularity score on Spotify,
 total follower count on Spotify, and subscriber count on YouTube. (If YouTube
  subscriber count is hidden, the value will appear as `NA`).
-*A data frame where each row represents one of
+* A data frame where each row represents one of
 the given artist's top songs on Spotify. There are columns for song name,
 Spotify popularity score, YouTube view count, match confidence score (i.e.
 confidence in the match between the Spotify song and YouTube video), Spotify
@@ -23,8 +23,11 @@ confidence in the match between the Spotify song and YouTube video), Spotify
 }
 \description{
 This function takes a Spotify artist profile URL as its argument and returns
-a list with data comparing the artist's popularity between Spotify and YouTube. Before running this
- function, make sure you've set your API credentials using [auth_creds()].
+a list with data comparing the artist's popularity between Spotify and YouTube.
+}
+\details{
+Before running this function, make sure you've set your API
+credentials using [auth_creds()].
 }
 \examples{
 # remember you must set up your API credentials with [auth_creds()] before you can run examples

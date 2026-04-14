@@ -1,8 +1,10 @@
 #' Matches Spotify song to corresponding YouTube music video
 #'
-#' Takes a Spotify song URL and returns a list with data comparing the song's
-#' popularity between Spotify and YouTube. Before running this
-#'  function, make sure you've set your API credentials using [auth_creds()].
+#' @description Takes a Spotify song URL and returns a list with data comparing the song's
+#' popularity between Spotify and YouTube.
+#'
+#' @details Before running this function, make sure you've set your API
+#' credentials using [auth_creds()].
 #'
 #' @param url Link to Spotify song, including `"https://"` at beginning.
 #'

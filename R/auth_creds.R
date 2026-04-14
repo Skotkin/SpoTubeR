@@ -1,7 +1,8 @@
 #' Saves YouTube and Spotify API credentials
 #'
-#' This function must be run before the other SpoTubeR functions can be used.
-#' You will need to first sign up for a Spotify API account
+#' @description This function must be run before the other SpoTubeR functions can be used.
+#'
+#' @details You will need to first sign up for a Spotify API account
 #' [here](https://developer.spotify.com/documentation/web-api) (requires a
 #' Spotify Premium subscription) and obtain an API key for the YouTube API
 #' [here](https://developers.google.com/youtube/v3/). After running this function,
@@ -10,9 +11,12 @@
 #'   user may need to restart R in order for the credentials to become retrievable
 #'    by other functions.)
 #'
-#' @param spotify_id Your Spotify API client ID.
-#' @param spotify_secret Your Spotify API client secret.
-#' @param yt_key Your YouTube API key.
+#' @return This function does not return anything. It does provide a message
+#' informing the user that their credentials have been saved.
+#'
+#' @param spotify_id Your Spotify API client ID (as character type).
+#' @param spotify_secret Your Spotify API client secret (as character type).
+#' @param yt_key Your YouTube API key (as character type).
 #'
 #' @export
 #'

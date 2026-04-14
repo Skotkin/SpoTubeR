@@ -26,8 +26,11 @@ confidence in the match between the Spotify song and YouTube video), Spotify
 \description{
 This function takes a record label name as an argument and returns a list
 with data comparing the popularity, between Spotify and YouTube, of the
-label's first 5 associated artists returned by Spotify. Before running this
- function, make sure you've set your API credentials using [auth_creds()].
+label's first 5 associated artists returned by Spotify.
+}
+\details{
+Before running this function, make sure you've set your API
+credentials using [auth_creds()].
 }
 \examples{
 # remember you must set up your API credentials with [auth_creds()] before you can run examples
