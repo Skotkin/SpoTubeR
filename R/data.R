@@ -1,12 +1,21 @@
 #' Billboard Hot 100 dataset
 #'
-#' A dataset with the Billboard Hot 100 songs as of April 11th, 2026.
+#' A dataset with the Billboard Hot 100 songs as of April 11th, 2026. Spotify
+#' and YouTube links were retrieved on April 14th, 2026. YouTube links go to
+#' official music videos when possible, or another official video associated
+#' with the song when a music video has not been released. One song is missing a
+#' YouTube link due to the YouTube video having been taken down at the time this
+#'  dataset was compiled. The Billboard Hot 100 is a weekly listing of the 100
+#'   most popular songs based on sales, radio airplay, and streaming in the United
+#'    States.
 #'
 #' @format A data frame with 100 rows and 3 variables:
 #' \describe{
 #'   \item{rank}{song rank}
 #'   \item{track_name}{song name}
 #'   \item{artist_name}{name of song artist}
+#'   \item{spotify_link}{link to song on Spotify}
+#'   \item{yt_link}{link to song's associated YouTube video}
 #'   ...
 #' }
 #' @source [Billboard Hot 100](https://www.billboard.com/charts/hot-100/)
