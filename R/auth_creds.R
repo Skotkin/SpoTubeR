@@ -22,7 +22,7 @@
 #'
 #' @examples \dontrun{auth_creds(spotify_id = "YOUR ID HERE", spotify_secret = "YOUR SECRET HERE", yt_key = "YOUR SECRET HERE")}
 
-auth_creds <- function(spotify_id, spotify_secret, yt_client, yt_secret) {
+auth_creds <- function(spotify_id, spotify_secret, yt_key) {
 
   # checks if R environ exists, and creates it if not
   renv <- file.path(Sys.getenv("HOME"), ".Renviron")

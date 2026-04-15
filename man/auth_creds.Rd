@@ -4,7 +4,7 @@
 \alias{auth_creds}
 \title{Saves YouTube and Spotify API credentials}
 \usage{
-auth_creds(spotify_id, spotify_secret, yt_client, yt_secret)
+auth_creds(spotify_id, spotify_secret, yt_key)
 }
 \arguments{
 \item{spotify_id}{Your Spotify API client ID (as character type).}
