@@ -1,5 +1,5 @@
 ---
-title: "SpoTubeR-vignette"
+title: "my-vignette"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{my-vignette}
@@ -18,6 +18,10 @@ knitr::opts_chunk$set(
 library(SpoTubeR)
 ```
 
+### Setting up Credentials/API
+```{r}
+
+```
 
 
 ## Data: billboard100_apr26
@@ -27,6 +31,8 @@ To explore the basic functions inside of SpoTubeR, we'll use a dataset containin
 ```{r}
 
 ```
+
+## Function Examples
 
 ### Match Spotify songs to their artist's YouTube music video with match_spotify_song
 ```{r}
@@ -44,4 +50,20 @@ To explore the basic functions inside of SpoTubeR, we'll use a dataset containin
 
 ```
 
-### 
+### Compare a given label's popularity on Spotify with its popularity on YouTube
+```{r}
+
+```
+
+## Creating Tables with SpoTubeR
+
+```{r}
+
+```
+
+## Visualizations with SpoTubeR
+
+```{r}
+
+```
+
