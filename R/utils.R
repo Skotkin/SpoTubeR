@@ -3,19 +3,21 @@ song_match <- function(url) {
   spotify_track <- spotifyr::get_track(substr(url, 32, nchar(url)))
 
   # every Spotify song seems to have an ISRC. when we search it on YouTube, we get the song's music video
-  tuber_match <- tuber::yt_search(term = paste(spotify_track$external_ids$isrc), max_results = 1)[1,]
+  tuber_match <- tuber::yt_search(term = paste(spotify_track$external_ids$isrc), max_results = 1, auth = "key")[1,]
 
   if (ncol(tuber_match) == 0) {
 
     # if ISRC doesn't work, we will try matching by song title and artist name (album name seems to hinder correct matching)
-    tuber_match <- tuber::yt_search(term = paste(spotify_track$name, paste(spotify_track$artists$name, collapse = " ")), max_results = 1)[1,]
+    tuber_match <- tuber::yt_search(term = paste(spotify_track$name, paste(spotify_track$artists$name, collapse = " ")), max_results = 1, auth = "key")[1,]
   }
 
   if (ncol(tuber_match) == 0) {
 
     output <- list(matched = FALSE,
                    final_list = list("Spotify popularity score (0-100)" = spotify_track$popularity, "Video view count on YouTube" = NA, "Match confidence score (0-10)" = 0),
-                   yt_channel = NA)
+                   yt_channel = NA,
+                   spotify_track = spotify_track,
+                   one_artist = ifelse(length(spotify_track$artists$name) == 1, TRUE, FALSE))
   } else {
 
     #  if exact date, month and year, and year, respectively
@@ -25,11 +27,14 @@ song_match <- function(url) {
 
     year_match <- ifelse(substr(spotify_track$album$release_date, 1, 4) == substr(tuber_match$publishedAt, 1, 4), TRUE, FALSE)
 
-    tuber_stats <- tuber::get_stats(tuber_match$video_id, include_content_details = TRUE)
+    tuber_stats <- tuber::get_stats(tuber_match$video_id, include_content_details = TRUE, auth = "key")
 
     tuber_duration_sec <- ifelse(grepl("H", tuber_stats$contentDetails_duration, fixed = TRUE), (as.numeric(gsub("PT", "", gsub("H.*", "", tuber_stats$contentDetails_duration)))*60*60), 0) +
-      ifelse(grepl("M", tuber_stats$contentDetails_duration, fixed = TRUE), (as.numeric(gsub("PT", "", gsub("M.*", "", tuber_stats$contentDetails_duration)))*60), 0) +
-      ifelse(grepl("S", tuber_stats$contentDetails_duration, fixed = TRUE), (as.numeric(gsub(".*M", "", gsub("S", "", tuber_stats$contentDetails_duration)))), 0)
+      ifelse((grepl("M", tuber_stats$contentDetails_duration, fixed = TRUE) & grepl("H", tuber_stats$contentDetails_duration, fixed = TRUE)), (as.numeric(gsub(".*H", "", gsub("M.*", "", tuber_stats$contentDetails_duration)))*60),
+             ifelse(grepl("M", tuber_stats$contentDetails_duration, fixed = TRUE), (as.numeric(gsub("PT", "", gsub("M.*", "", tuber_stats$contentDetails_duration))))*60, 0)) +
+      ifelse((grepl("S", tuber_stats$contentDetails_duration, fixed = TRUE) & grepl("M", tuber_stats$contentDetails_duration, fixed = TRUE)), (as.numeric(gsub(".*M", "", gsub("S", "", tuber_stats$contentDetails_duration)))),
+             ifelse((grepl("S", tuber_stats$contentDetails_duration, fixed = TRUE) & grepl("H", tuber_stats$contentDetails_duration, fixed = TRUE)), (as.numeric(gsub(".*H", "", gsub("S", "", tuber_stats$contentDetails_duration)))),
+                    ifelse(grepl("S", tuber_stats$contentDetails_duration, fixed = TRUE), (as.numeric(gsub("PT", "", gsub("S.*", "", tuber_stats$contentDetails_duration)))), 0)))
 
     spotify_duration_sec <- round(spotify_track$duration_ms/1000)
 
@@ -64,6 +69,40 @@ song_match <- function(url) {
 
     output <- list(matched = TRUE,
                    final_list = list("Spotify popularity score (0-100)" = spotify_track$popularity, "Video view count on YouTube" = as.numeric(tuber_stats$statistics_viewCount), "Match confidence score (0-10)" = confidence_score),
-                   yt_channel = tuber_match$channelId)
+                   yt_channel = tuber_match$channelId,
+                   spotify_track = spotify_track,
+                   tuber_match = tuber_match,
+                   one_artist = ifelse(length(spotify_track$artists$name) == 1, TRUE, FALSE))
   }
+
+  return(output)
+}
+
+get_yt_matches <- function(top_tracks) {
+
+  matches <- data.frame(song_name = character(), spotify_popularity_score = numeric(), youtube_view_count = numeric(), match_confidence_score = numeric(), yt_channel = character(), one_artist = logical())
+
+  for (i in 1:nrow(top_tracks)) {
+
+    matches1 <- song_match(top_tracks$external_urls.spotify[i])
+
+    matches1 <- c(top_tracks$name[i], as.numeric(matches1$final_list$`Spotify popularity score (0-100)`), as.numeric(matches1$final_list$`Video view count on YouTube`), as.numeric(matches1$final_list$`Match confidence score (0-10)`), matches1$yt_channel, matches1$one_artist)
+
+    matches[nrow(matches)+1,] <- matches1
+  }
+
+  return(matches)
+}
+
+get_confident_match_channel <- function(matches) {
+
+  # retrieving YouTube channel ID from the most confidently matched song (taking the first listed one if there are multiple with the same confidence score) of those with only one artist on Spotify (to ensure songs are not used from another artist's channel)
+  confident_match <- matches |>
+    dplyr::filter(one_artist == TRUE) |>
+    dplyr::filter(match_confidence_score == max(match_confidence_score)) |>
+    head(1)
+
+  confident_match <- confident_match$yt_channel
+
+  return(confident_match)
 }
