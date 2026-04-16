@@ -1,3 +1,5 @@
+globalVariables(c("one_artist", "yt_channel"))
+
 #' Compares given label's popularity on Spotify with its popularity on YouTube
 #'
 #' @description This function takes a record label name as an argument and returns a list
@@ -26,13 +28,14 @@
 #'
 #' @examples
 #' # remember you must set up your API credentials with [auth_creds()] before you can run examples
+#' # currently produces error when over YouTube API quota limit, so designated as don't run for now
 #' # using Mercury Records
-#' label_comp("Mercury Records")
+#' \dontrun{label_comp("Mercury Records")}
 
 label_comp <- function(label) {
 
   # am using capture.output to suppress the print output that would otherwise be produced
-  capture.output(artists <- spotifyr::get_label_artists(label, limit = 5))
+  utils::capture.output(artists <- spotifyr::get_label_artists(label, limit = 5))
 
   if (nrow(artists) == 0) {
 
@@ -52,7 +55,7 @@ label_comp <- function(label) {
     message(paste("Retrieving Spotify statistics associated with", artists$name[i], "and matching their top songs to YouTube videos."))
 
     top_tracks <- spotifyr::get_artist_top_tracks(artists$id[i]) |>
-      head(5)
+      utils::head(5)
 
     matches <- get_yt_matches(top_tracks)
 

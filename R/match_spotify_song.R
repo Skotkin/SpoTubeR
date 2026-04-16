@@ -16,8 +16,10 @@
 #'
 #' @examples
 #' # remember you must set up your API credentials with [auth_creds()] before you can run examples
+#' # currently produces error when over YouTube API quota limit, so designated as don't run for now
 #' # using Ordinary by Alex Warren
-#' match_spotify_song("https://open.spotify.com/track/6qqrTXSdwiJaq8SO0X2lSe?si=ba9ef90830b24d28")
+#' \dontrun{
+#' match_spotify_song("https://open.spotify.com/track/6qqrTXSdwiJaq8SO0X2lSe?si=ba9ef90830b24d28")}
 
 match_spotify_song <- function(url) {
 

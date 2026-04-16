@@ -34,6 +34,7 @@ credentials using [auth_creds()].
 }
 \examples{
 # remember you must set up your API credentials with [auth_creds()] before you can run examples
+# currently produces error when over YouTube API quota limit, so designated as don't run for now
 # using Mercury Records
-label_comp("Mercury Records")
+\dontrun{label_comp("Mercury Records")}
 }

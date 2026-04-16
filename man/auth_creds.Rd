@@ -31,5 +31,7 @@ Spotify Premium subscription) and obtain an API key for the YouTube API
    by other functions.)
 }
 \examples{
-\dontrun{auth_creds(spotify_id = "YOUR ID HERE", spotify_secret = "YOUR SECRET HERE", yt_key = "YOUR SECRET HERE")}
+\dontrun{auth_creds(spotify_id = "YOUR ID HERE",
+spotify_secret = "YOUR SECRET HERE",
+yt_key = "YOUR SECRET HERE")}
 }

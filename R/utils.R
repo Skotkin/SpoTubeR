@@ -1,3 +1,5 @@
+globalVariables(c("yt_channel", "one_artist", "match_confidence_score"))
+
 song_match <- function(url) {
 
   spotify_track <- spotifyr::get_track(substr(url, 32, nchar(url)))
@@ -100,7 +102,7 @@ get_confident_match_channel <- function(matches) {
   confident_match <- matches |>
     dplyr::filter(one_artist == TRUE) |>
     dplyr::filter(match_confidence_score == max(match_confidence_score)) |>
-    head(1)
+    utils::head(1)
 
   confident_match <- confident_match$yt_channel
 

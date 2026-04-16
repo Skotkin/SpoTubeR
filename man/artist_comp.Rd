@@ -31,6 +31,8 @@ credentials using [auth_creds()].
 }
 \examples{
 # remember you must set up your API credentials with [auth_creds()] before you can run examples
+# currently produces error when over YouTube API quota limit, so designated as don't run for now
 # using Noah Kahan
-artist_comp("https://open.spotify.com/artist/2RQXRUsr4IW1f3mKyKsy4B?si=69yU_685T96XI2mWtOGfLg")
+\dontrun{
+artist_comp("https://open.spotify.com/artist/2RQXRUsr4IW1f3mKyKsy4B?si=69yU_685T96XI2mWtOGfLg")}
 }
