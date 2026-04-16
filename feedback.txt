@@ -1,0 +1,7 @@
+Hi Úna and Samantha,
+
+Thanks for the package!
+
+- Everything works as intended. Good job!
+- I forgot to investigate the hyperlink situation. I added it in your DESCRIPTION file, but "Roxygen: list(markdown = TRUE)" will allow you to add in hyperlinks.
+- The next steps will focus on getting the functions to work on some base cases/examples.

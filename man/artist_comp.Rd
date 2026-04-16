@@ -7,19 +7,21 @@
 artist_comp(url)
 }
 \arguments{
-\item{url}{Link to Spotify artist profile, including `"https://"` at beginning.}
+\item{url}{Link to Spotify artist profile, including \code{"https://"} at beginning.}
 }
 \value{
 This function returns a list containing:
-* A list providing the given artist's overall popularity score on Spotify,
+\itemize{
+\item A list providing the given artist's overall popularity score on Spotify,
 total follower count on Spotify, and subscriber count on YouTube. (If YouTube
- subscriber count is hidden, the value will appear as `NA`).
-* A data frame where each row represents one of
+subscriber count is hidden, the value will appear as \code{NA}).
+\item A data frame where each row represents one of
 the given artist's top songs on Spotify. There are columns for song name,
 Spotify popularity score, YouTube view count, match confidence score (i.e.
 confidence in the match between the Spotify song and YouTube video), Spotify
- popularity rank within the top songs, and YouTube view count rank within
- the top songs.
+popularity rank within the top songs, and YouTube view count rank within
+the top songs.
+}
 }
 \description{
 This function takes a Spotify artist profile URL as its argument and returns
@@ -27,7 +29,7 @@ a list with data comparing the artist's popularity between Spotify and YouTube.
 }
 \details{
 Before running this function, make sure you've set your API
-credentials using [auth_creds()].
+credentials using \code{\link[=auth_creds]{auth_creds()}}.
 }
 \examples{
 # remember you must set up your API credentials with [auth_creds()] before you can run examples

@@ -7,13 +7,13 @@
 match_spotify_song(url)
 }
 \arguments{
-\item{url}{Link to Spotify song, including `"https://"` at beginning.}
+\item{url}{Link to Spotify song, including \code{"https://"} at beginning.}
 }
 \value{
 This function returns a list containing the Spotify popularity score,
- corresponding YouTube video view count, and match confidence score (i.e. the
-  confidence that the correct YouTube video was matched to the given Spotify
-   song).
+corresponding YouTube video view count, and match confidence score (i.e. the
+confidence that the correct YouTube video was matched to the given Spotify
+song).
 }
 \description{
 Takes a Spotify song URL and returns a list with data comparing the song's
@@ -21,7 +21,7 @@ popularity between Spotify and YouTube.
 }
 \details{
 Before running this function, make sure you've set your API
-credentials using [auth_creds()].
+credentials using \code{\link[=auth_creds]{auth_creds()}}.
 }
 \examples{
 # remember you must set up your API credentials with [auth_creds()] before you can run examples
