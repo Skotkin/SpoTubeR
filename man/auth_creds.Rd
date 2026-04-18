@@ -22,13 +22,13 @@ This function must be run before the other SpoTubeR functions can be used.
 }
 \details{
 You will need to first sign up for a Spotify API account
-[here](https://developer.spotify.com/documentation/web-api) (requires a
+\href{https://developer.spotify.com/documentation/web-api}{here} (requires a
 Spotify Premium subscription) and obtain an API key for the YouTube API
-[here](https://developers.google.com/youtube/v3/). After running this function,
- your credentials will be saved to your R environment, and SpoTubeR's functions
-  will automatically retrieve them, even across R sessions. (Currently, the
-  user may need to restart R in order for the credentials to become retrievable
-   by other functions.)
+\href{https://developers.google.com/youtube/v3/}{here}. After running this function,
+your credentials will be saved to your R environment, and SpoTubeR's functions
+will automatically retrieve them, even across R sessions. (Currently, the
+user may need to restart R in order for the credentials to become retrievable
+by other functions.)
 }
 \examples{
 \dontrun{auth_creds(spotify_id = "YOUR ID HERE",

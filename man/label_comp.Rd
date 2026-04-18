@@ -11,17 +11,19 @@ label_comp(label)
 }
 \value{
 This function returns a list with a sublist for each of the first 5
- (or less) artists returned by Spotify as being associated with the given label.
-  Each sublist contains the following:
-* A list providing the given artist's overall popularity score on Spotify,
+(or less) artists returned by Spotify as being associated with the given label.
+Each sublist contains the following:
+\itemize{
+\item A list providing the given artist's overall popularity score on Spotify,
 total follower count on Spotify, and subscriber count on YouTube. (If YouTube
- subscriber count is hidden, the value will appear as `NA`).
-* A data frame where each row represents one of the given artist's top songs
+subscriber count is hidden, the value will appear as \code{NA}).
+\item A data frame where each row represents one of the given artist's top songs
 on Spotify, with up to 5 songs included. There are columns for song name,
 Spotify popularity score, YouTube view count, match confidence score (i.e.
 confidence in the match between the Spotify song and YouTube video), Spotify
- popularity rank within the top songs, and YouTube view count rank within
- the top songs.
+popularity rank within the top songs, and YouTube view count rank within
+the top songs.
+}
 }
 \description{
 This function takes a record label name as an argument and returns a list
@@ -30,7 +32,7 @@ label's first 5 associated artists returned by Spotify.
 }
 \details{
 Before running this function, make sure you've set your API
-credentials using [auth_creds()].
+credentials using \code{\link[=auth_creds]{auth_creds()}}.
 }
 \examples{
 # remember you must set up your API credentials with [auth_creds()] before you can run examples
