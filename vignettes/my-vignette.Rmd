@@ -64,16 +64,14 @@ SpoTubeR::match_spotify_song('https://open.spotify.com/track/65DbTqJKhbwqYbZ1Okr
 ### Compare artists' content on Spotify and YouTube with artist_comp()
 ```{r}
 # Using the #1 song, Choosing Texas
-#SpoTubeR::artist_comp('https://open.spotify.com/track/65DbTqJKhbwqYbZ1Okr0rc?si=2c1b70f52fde43b7')
-#or
-#SpoTubeR::artist_comp('https://www.youtube.com/watch?v=nUsrYVxrDwI&list=RDnUsrYVxrDwI')
+SpoTubeR::artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=7yliDpVUTXCUxKh_SuuPrw')
 ```
 
 ### Compare a given label's popularity on Spotify with its popularity on YouTube with label_comp()
 
 ```{r}
 # Using the Label Universal
-#SpoTubeR::label_comp('Universal')
+SpoTubeR::label_comp('Universal')
 ```
 
 ## Creating Tables with SpoTubeR
