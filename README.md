@@ -4,6 +4,7 @@
 # SpoTubeR
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 SpoTubeR is a package which combines data from the R wrappers spotifyr
@@ -28,70 +29,67 @@ devtools::install_github("Skotkin/SpoTubeR")
 
 ## Authentication
 
-For Spotify API:
+Users must create a Spotify API (only available on Premium accounts) and
+a YouTube API, then authenticate with the \[auth_creds()\] function,
+before they can use the other functions provided.
 
-First, set up a Dev account with Spotify to access their Web API (see
-<https://developer.spotify.com/my-applications/#!/applications>). This
-will give you your Client ID and Client Secret. Once you have those, you
-can pull your access token into R with get_spotify_access_token().
+## SpoTubeR Function Example
 
-The easiest way to authenticate is to set your credentials to the System
-Environment variables SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET. The
-default arguments to get_spotify_access_token() (and all other functions
-in this package) will refer to those. Alternatively, you can set them
-manually and make sure to explicitly refer to your access token in each
-subsequent function call.
-
-Sys.setenv(SPOTIFY_CLIENT_ID = ‘xxxxxxxxxxxxxxxxxxxxx’)
-Sys.setenv(SPOTIFY_CLIENT_SECRET = ‘xxxxxxxxxxxxxxxxxxxxx’)
-
-access_token \<- get_spotify_access_token()
-
-For YouTube API:
-
-First, get the application id and password from the Google Developer
-Console (see
-<https://developers.google.com/youtube/v3/getting-started>). Enable all
-the YouTube APIs. Then set the application id and password via the
-yt_oauth function. For more information about YouTube OAuth, see YouTube
-OAuth Guide
-(<https://developers.google.com/youtube/v3/guides/authentication>).
-
-yt_oauth(“app_id”, “app_password”)
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+This is a basic example of a SpoTubeR function and its output:
 
 ``` r
 library(SpoTubeR)
-## basic example code
+library(knitr)
+artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=eS8ItlNFTtmtUOE5z5WwbA')
+#> Retrieving Spotify statistics associated with Ella Langley and matching their top songs to YouTube videos.
+#> Retrieving YouTube subscriber count associated with Ella Langley - Topic.
+#> [[1]]
+#> [[1]]$`Artist's Spotify popularity score (0-100)`
+#> [1] 89
+#> 
+#> [[1]]$`Artist's Spotify follower count`
+#> [1] 1438951
+#> 
+#> [[1]]$`Artist's YouTube channel subscriber count`
+#> [1] 2610
+#> 
+#> 
+#> $`Artist's top Spotify songs`
+#>                                        song_name spotify_popularity_score
+#> 1                                 Choosin' Texas                       85
+#> 2                                         Be Her                       82
+#> 3                           weren't for the wind                       88
+#> 4             Hell At Night (feat. Ella Langley)                       82
+#> 5                              Loving Life Again                       80
+#> 6                                      Dandelion                       79
+#> 7                           Bottom Of Your Boots                       84
+#> 8  you look like you love me (feat. Riley Green)                       82
+#> 9                       Country Boy's Dream Girl                       82
+#> 10                       girl you're taking home                       81
+#>    youtube_view_count match_confidence_score spotify_popularity_rank
+#> 1             1314629                      8                       2
+#> 2              496585                      8                       4
+#> 3            17797245                      7                       1
+#> 4             5444048                      7                       4
+#> 5              327955                      8                       9
+#> 6             3356652                      8                      10
+#> 7              934095                      8                       3
+#> 8            18856418                      7                       4
+#> 9             5010778                      4                       4
+#> 10            6471388                      7                       8
+#>    youtube_views_rank
+#> 1                  10
+#> 2                   5
+#> 3                   9
+#> 4                   3
+#> 5                   7
+#> 6                   6
+#> 7                   1
+#> 8                   8
+#> 9                   4
+#> 10                  2
 ```
 
 ## License
 
 Scripts are released under the MIT License
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
