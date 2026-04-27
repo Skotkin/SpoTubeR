@@ -33,13 +33,22 @@ Users must create a Spotify API (only available on Premium accounts) and
 a YouTube API, then authenticate with the \[auth_creds()\] function,
 before they can use the other functions provided.
 
+Example:
+
+``` r
+library(SpoTubeR)
+
+auth_creds(spotify_id = "YOUR ID HERE", spotify_secret = "YOUR SECRET HERE", yt_key = "YOUR SECRET HERE")
+#> Your credentials have been saved!
+```
+
 ## SpoTubeR Function Example
 
 This is a basic example of a SpoTubeR function and its output:
 
 ``` r
 library(SpoTubeR)
-library(knitr)
+
 artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=eS8ItlNFTtmtUOE5z5WwbA')
 #> Retrieving Spotify statistics associated with Ella Langley and matching their top songs to YouTube videos.
 #> Retrieving YouTube subscriber count associated with Ella Langley - Topic.
@@ -67,16 +76,16 @@ artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=eS8ItlNFT
 #> 9                       Country Boy's Dream Girl                       82
 #> 10                       girl you're taking home                       81
 #>    youtube_view_count match_confidence_score spotify_popularity_rank
-#> 1             1314629                      8                       2
-#> 2              496585                      8                       4
-#> 3            17797245                      7                       1
-#> 4             5444048                      7                       4
-#> 5              327955                      8                       9
-#> 6             3356652                      8                      10
-#> 7              934095                      8                       3
-#> 8            18856418                      7                       4
-#> 9             5010778                      4                       4
-#> 10            6471388                      7                       8
+#> 1             1314747                      8                       2
+#> 2              496624                      8                       4
+#> 3            17797611                      7                       1
+#> 4             5444279                      7                       4
+#> 5              328102                      8                       9
+#> 6             3356843                      8                      10
+#> 7              934296                      8                       3
+#> 8            18856709                      7                       4
+#> 9             5010828                      4                       4
+#> 10            6471595                      7                       8
 #>    youtube_views_rank
 #> 1                  10
 #> 2                   5

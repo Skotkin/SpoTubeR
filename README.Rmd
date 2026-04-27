@@ -32,13 +32,22 @@ devtools::install_github("Skotkin/SpoTubeR")
 ## Authentication
 Users must create a Spotify API (only available on Premium accounts) and a YouTube API, then authenticate with the [auth_creds()] function, before they can use the other functions provided.
 
+Example: 
+
+```{r}
+library(SpoTubeR)
+
+auth_creds(spotify_id = "YOUR ID HERE", spotify_secret = "YOUR SECRET HERE", yt_key = "YOUR SECRET HERE")
+```
+
+
 ## SpoTubeR Function Example
 
 This is a basic example of a SpoTubeR function and its output:
 
 ```{r example}
 library(SpoTubeR)
-library(knitr)
+
 artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=eS8ItlNFTtmtUOE5z5WwbA')
 ```
 
