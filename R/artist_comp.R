@@ -30,6 +30,8 @@ globalVariables(c("one_artist", "yt_channel"))
 #' \dontrun{
 #' artist_comp("https://open.spotify.com/artist/2RQXRUsr4IW1f3mKyKsy4B?si=69yU_685T96XI2mWtOGfLg")}
 
+# note: we will add functionality so a YouTube channel can be matched to a Spotify artist and their popularity can be compared that way
+
 artist_comp <- function(url) {
 
   spotify_artist <- spotifyr::get_artist(gsub("\\?.*", "", substr(url, 33, nchar(url))))
