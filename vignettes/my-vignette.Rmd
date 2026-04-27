@@ -38,7 +38,7 @@ Now that you have your Spotify and YouTube access tokens, you can start experime
 To explore the basic functions inside of SpoTubeR, we'll use a dataset containing billboard's 100 most popular current songs on April 26th, 2026. 
 
 ```{r}
-SpoTubeR::billboard100_apr26 |> View()
+#SpoTubeR::billboard100_apr26 |> View()
 ```
 
 ## Function Examples
@@ -47,11 +47,8 @@ SpoTubeR::billboard100_apr26 |> View()
 
 ```{r}
 # Using the #1 song, Choosing Texas
-SpoTubeR::match_spotify_song('https://open.spotify.com/track/65DbTqJKhbwqYbZ1Okr0rc?si=2c1b70f52fde43b7')
+#SpoTubeR::match_spotify_song('https://open.spotify.com/track/65DbTqJKhbwqYbZ1Okr0rc?si=2c1b70f52fde43b7')
 
-# Adding a Video Count Column to our Data Set
-#billboard100_apr26 <- billboard100_apr26 |> 
-  #mutate(temp_list = list(match_spotify_song(lapply(spotify_link, httr::GET))), YT_views = temp_list[[2]])
 ```
 
 ### Match YouTube music videos to their artist's Spotify song with match_yt_song
@@ -64,14 +61,14 @@ SpoTubeR::match_spotify_song('https://open.spotify.com/track/65DbTqJKhbwqYbZ1Okr
 ### Compare artists' content on Spotify and YouTube with artist_comp()
 ```{r}
 # Using the #1 song, Choosing Texas
-SpoTubeR::artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=7yliDpVUTXCUxKh_SuuPrw')
+#SpoTubeR::artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=7yliDpVUTXCUxKh_SuuPrw')
 ```
 
 ### Compare a given label's popularity on Spotify with its popularity on YouTube with label_comp()
 
 ```{r}
 # Using the Label Universal
-SpoTubeR::label_comp('Universal')
+#SpoTubeR::label_comp('Universal')
 ```
 
 ## Creating Tables with SpoTubeR
