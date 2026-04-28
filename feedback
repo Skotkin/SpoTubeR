@@ -1,0 +1,3 @@
+-	The whole package looks mostly set-up and has a bunch of details inside! I couldn’t get the auth_creds function to work on my end, although I imagine I’m putting in the incorrect specs.
+-	For the vignette, definitely add some background to each of the functions so we get more information about what each function does and what the output represents.
+-	Heading into the final package submission, continue refining all of the code and making sure all of it is operational.
