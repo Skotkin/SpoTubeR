@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-SpoTubeR <img src="man/figures/logo.png" align="right" height="70" alt="" />
+SpoTubeR <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 # SpoTubeR
 
