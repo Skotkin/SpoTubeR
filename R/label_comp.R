@@ -35,13 +35,18 @@ globalVariables(c("one_artist", "yt_channel"))
 
 label_comp <- function(label) {
 
+  # retrieving 5 artists associated with the given record label
   # am using capture.output to suppress the print output that would otherwise be produced
   utils::capture.output(artists <- spotifyr::get_label_artists(label, limit = 5))
 
+  # producing error if no artists were returned (suggesting invalid label name)
   if (nrow(artists) == 0) {
 
     stop("No artists were returned. Did you enter the label name correctly?")
   }
+
+
+  # initializing lists and values to be filled later by for loops
 
   output <- vector(mode = "list", length = nrow(artists))
 
@@ -51,22 +56,28 @@ label_comp <- function(label) {
 
   confident_match_all <- rep(NA, nrow(artists))
 
+
   for (i in 1:nrow(artists)) {
 
     message(paste("Retrieving Spotify statistics associated with", artists$name[i], "and matching their top songs to YouTube videos."))
 
+    # retrieving artist's top tracks (up to 5)
     top_tracks <- spotifyr::get_artist_top_tracks(artists$id[i]) |>
       utils::head(5)
 
+    # matching top tracks to YouTube videos
     matches <- get_yt_matches(top_tracks)
 
+    # getting best match YouTube channel corresponding to the artist
     confident_match <- get_confident_match_channel(matches)
 
+    # ranking top tracks by Spotify popularity and YouTube view count
     matches <- matches |>
       dplyr::select(!c(yt_channel, one_artist)) |>
       dplyr::mutate(spotify_popularity_rank = rank(dplyr::desc(matches$spotify_popularity_score), ties.method = "min"),
                     youtube_views_rank = rank(dplyr::desc(matches$youtube_view_count), ties.method = "min"))
 
+    # adding artist info to initialized lists/values
     matches_all[i] <- list(matches)
 
     confident_match_all[i] <- confident_match
@@ -87,12 +98,15 @@ label_comp <- function(label) {
 
     message(paste0("Retrieving YouTube subscriber count associated with ", channel_stats$title[i], "."))
 
+    # retrieving YouTube subscriber count for artist, or using NA if subscriber count is hidden
     yt_subscribers <- ifelse(channel_stats$subscriber_count_hidden[i] == FALSE, channel_stats$subscriber_count[i], NA)
 
+    # creating output list for given artist
     output[i] <- list(list(list("Artist's Spotify popularity score (0-100)" = artists$popularity[i], "Artist's Spotify follower count" = artists$followers.total[i], "Artist's YouTube channel subscriber count" = yt_subscribers),
                       "Artist's top Spotify songs" = matches_all[i]))
   }
 
+  # assigning names (artist names) to output
   names(output) <- output_names
 
   return(output)

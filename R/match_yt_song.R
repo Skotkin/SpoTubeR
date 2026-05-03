@@ -26,14 +26,17 @@
 
 match_yt_song <- function(url) {
 
+  # attempting to match YouTube video to Spotify song and retrieving associated data
   output <- yt_to_spotify(url)
 
+  # returning message if YouTube video is not matched successfully
   if (output$matched == FALSE) {
 
     message(paste("No potential Spotify song match was found for", output$tuber_match$snippet_title, "from channel", output$tuber_match$snippet_channelTitle, "on YouTube"))
 
   }
 
+  # returning messages if YouTube video is matched successfully
   if (output$matched == TRUE) {
 
     message(paste("Returning statistics for Spotify song corresponding to", output$tuber_match$snippet_title, "from channel", output$tuber_match$snippet_channelTitle, "on YouTube"))

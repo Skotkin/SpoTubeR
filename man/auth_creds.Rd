@@ -15,7 +15,8 @@ auth_creds(spotify_id, spotify_secret, yt_key)
 }
 \value{
 This function does not return anything. It does provide a message
-informing the user that their credentials have been saved.
+informing the user that their credentials have been saved and tests if those
+credentials are valid.
 }
 \description{
 This function must be run before the other SpoTubeR functions can be used.
@@ -24,11 +25,11 @@ This function must be run before the other SpoTubeR functions can be used.
 You will need to first sign up for a Spotify API account
 \href{https://developer.spotify.com/documentation/web-api}{here} (requires a
 Spotify Premium subscription) and obtain an API key for the YouTube API
-\href{https://developers.google.com/youtube/v3/}{here}. After running this function,
-your credentials will be saved to your R environment, and SpoTubeR's functions
-will automatically retrieve them, even across R sessions. (Currently, the
-user may need to restart R in order for the credentials to become retrievable
-by other functions.)
+\href{https://developers.google.com/youtube/v3/}{here}. Currently, the
+user may need to restart R after running \code{\link[=auth_creds]{auth_creds()}} in order for the
+credentials to become retrievable by other functions. However, the user
+only needs to run \code{\link[=auth_creds]{auth_creds()}} once ever; after this, the saved credentials
+will be retrievable even in new R sessions.
 }
 \examples{
 \dontrun{auth_creds(spotify_id = "YOUR ID HERE",

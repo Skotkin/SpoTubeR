@@ -33,6 +33,7 @@ globalVariables(c("one_artist", "yt_channel"))
 
 yt_artist_comp <- function(url) {
 
+  # retrieving statistics for YouTube channel corresponding to given URL
   channel_stats <- tryCatch({
     tuber::get_channel_stats(substr(url, 33, 56), auth = "key")
   }, error = function(e) {
@@ -47,16 +48,25 @@ yt_artist_comp <- function(url) {
 
   message(paste("Retrieving YouTube subscriber count associated with", channel_stats$title, "and matching them to a Spotify artist."))
 
+  # retrieving number of subscribers to YouTube channel, or NA if subscriber count is hidden
   yt_subscribers <- ifelse(channel_stats$subscriber_count_hidden == FALSE, channel_stats$subscriber_count, NA)
 
-  spotify_artist <- spotifyr::search_spotify(channel_stats$title, type = "artist")[1,]
+  # attempting to match YouTube channel to Spotify artist
+  spotify_artist <- tryCatch({
+    spotifyr::search_spotify(channel_stats$title, type = "artist")[1,]
+  }, error = function(e) {
+    stop("YouTube channel could not be matched to Spotify artist. Does this channel correspond to an artist likely listed on Spotify?")
+  })
 
   message(paste("Retrieving Spotify statistics associated with", spotify_artist$name, "and matching their top songs to YouTube videos."))
 
+  # retrieving matched Spotify artist's top tracks on Spotify
   top_tracks <- spotifyr::get_artist_top_tracks(spotify_artist$id)
 
+  # matching top Spotify tracks to YouTube videos
   matches <- get_yt_matches(top_tracks)
 
+  # ranking songs by Spotify popularity score and YouTube view count
   matches <- matches |>
     dplyr::select(!c(yt_channel, one_artist)) |>
     dplyr::mutate(spotify_popularity_rank = rank(dplyr::desc(matches$spotify_popularity_score), ties.method = "min"),

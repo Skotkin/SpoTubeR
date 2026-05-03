@@ -5,14 +5,15 @@
 #' @details You will need to first sign up for a Spotify API account
 #' [here](https://developer.spotify.com/documentation/web-api) (requires a
 #' Spotify Premium subscription) and obtain an API key for the YouTube API
-#' [here](https://developers.google.com/youtube/v3/). After running this function,
-#'  your credentials will be saved to your R environment, and SpoTubeR's functions
-#'   will automatically retrieve them, even across R sessions. (Currently, the
-#'   user may need to restart R in order for the credentials to become retrievable
-#'    by other functions.)
+#' [here](https://developers.google.com/youtube/v3/). Currently, the
+#'   user may need to restart R after running [auth_creds()] in order for the
+#'   credentials to become retrievable by other functions. However, the user
+#'   only needs to run [auth_creds()] once ever; after this, the saved credentials
+#'    will be retrievable even in new R sessions.
 #'
 #' @return This function does not return anything. It does provide a message
-#' informing the user that their credentials have been saved.
+#' informing the user that their credentials have been saved and tests if those
+#' credentials are valid.
 #'
 #' @param spotify_id Your Spotify API client ID (as character type).
 #' @param spotify_secret Your Spotify API client secret (as character type).
@@ -32,6 +33,7 @@ auth_creds <- function(spotify_id, spotify_secret, yt_key) {
     file.create(renv)
   }
 
+  # initializing variables for the old R environ contents, and whether or not the Spotify and YouTube credentials were replaced
   oldenv <- readLines(renv)
   replaced_spotify_id <- FALSE
   replaced_spotify_secret <- FALSE

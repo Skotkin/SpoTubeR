@@ -32,6 +32,7 @@ globalVariables(c("one_artist", "yt_channel"))
 
 spotify_artist_comp <- function(url) {
 
+  # attempting to match given URL to Spotify artist
   spotify_artist <- tryCatch({
     spotifyr::get_artist(gsub("\\?.*", "", substr(url, 33, nchar(url))))
   }, error = function(e) {
@@ -40,18 +41,22 @@ spotify_artist_comp <- function(url) {
 
   message(paste("Retrieving Spotify statistics associated with", spotify_artist$name, "and matching their top songs to YouTube videos."))
 
+  # retrieving artist top tracks
   top_tracks <- spotifyr::get_artist_top_tracks(spotify_artist$id)
 
+  # attempting to match artist top tracks to YouTube videos
   matches <- get_yt_matches(top_tracks)
 
+  # retrieving most confidently matched YouTube channel to Spotify artist
   confident_match <- get_confident_match_channel(matches)
 
+  # ranking artist's songs by Spotify popularity score and YouTube view count
   matches <- matches |>
     dplyr::select(!c(yt_channel, one_artist)) |>
     dplyr::mutate(spotify_popularity_rank = rank(dplyr::desc(matches$spotify_popularity_score), ties.method = "min"),
                   youtube_views_rank = rank(dplyr::desc(matches$youtube_view_count), ties.method = "min"))
 
-  # matching most confidently matched YouTube channel ID with a YouTube channel and retrieving number of subscribers
+  # matching most confidently matched YouTube channel ID with a YouTube channel
   channel_stats <- tryCatch({
     tuber::get_channel_stats(confident_match, auth = "key")
   }, error = function(e) {
@@ -62,6 +67,7 @@ spotify_artist_comp <- function(url) {
 
   message(paste0("Retrieving YouTube subscriber count associated with ", channel_stats$title, "."))
 
+  # retrieving number of subscribers to matched YouTube channel, or NA if subscriber count is hidden
   yt_subscribers <- ifelse(channel_stats$subscriber_count_hidden == FALSE, channel_stats$subscriber_count, NA)
 
   return(list(list("Artist's Spotify popularity score (0-100)" = spotify_artist$popularity, "Artist's Spotify follower count" = spotify_artist$followers$total, "Artist's YouTube channel subscriber count" = yt_subscribers),
