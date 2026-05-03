@@ -13,12 +13,14 @@ knitr::opts_chunk$set(
 )
 ```
 
+SpoTubeR <img src="man/figures/logo.png" align="right" height="70" alt="" />
+
 # SpoTubeR
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-SpoTubeR is a package which combines data from the R wrappers spotifyr and tuber to match a given Spotify song with an associated YouTube music video. When given a Spotify Song or YouTube Music video, SpoTubeR generates a 'match score' equating to its confidence that the songs are a match. SpoTuber can also be used to explore compelling questions about how songs across different genres, by different artists, associated with different record labels, or released on different years may generate more or less popular music videos on YouTube in comparison with the song's popularity on Spotify.
+SpoTubeR is a package which combines data from the R wrappers spotifyr and tuber to match a given Spotify song with an associated YouTube music video. When given a Spotify song or YouTube Music video, SpoTubeR generates a 'match score' equating to its confidence that the songs are a match. SpoTubeR can also be used to explore compelling questions about how songs across different artists and associated with different record labels may generate more or less popular music videos on YouTube in comparison with the song's popularity on Spotify.
 
 ## Installation
 
@@ -37,7 +39,7 @@ Example:
 ```{r}
 library(SpoTubeR)
 
-auth_creds(spotify_id = "YOUR ID HERE", spotify_secret = "YOUR SECRET HERE", yt_key = "YOUR SECRET HERE")
+#auth_creds(spotify_id = "YOUR ID HERE", spotify_secret = "YOUR SECRET HERE", yt_key = "YOUR SECRET HERE")
 ```
 
 
@@ -48,7 +50,7 @@ This is a basic example of a SpoTubeR function and its output:
 ```{r example}
 library(SpoTubeR)
 
-artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=eS8ItlNFTtmtUOE5z5WwbA')
+#spotify_artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=eS8ItlNFTtmtUOE5z5WwbA')
 ```
 
 ## License

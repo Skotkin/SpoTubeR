@@ -1,6 +1,6 @@
 # checking that the appropriate 2 messages are printed when a Spotify video match is found
 testthat::test_that("match messages work", {
-  testthat::expect_message(object = match_yt_song('https://www.youtube.com/watch?v=E1mU6h4Xdxc'), regexp = "Returning statistics for Spotify Songs corresponding to.*")
+  testthat::expect_message(object = match_yt_song('https://www.youtube.com/watch?v=E1mU6h4Xdxc'), regexp = "Returning statistics for Spotify song corresponding to.*")
   testthat::expect_message(object = match_yt_song('https://www.youtube.com/watch?v=E1mU6h4Xdxc'), regexp = "Spotify song was identified as.*")
 })
 
