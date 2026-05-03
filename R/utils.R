@@ -2,17 +2,31 @@ globalVariables(c("yt_channel", "one_artist", "match_confidence_score"))
 
 
 # this function matches a Spotify song to a YouTube video
-song_match <- function(url) {
+spotify_to_yt <- function(url) {
 
-  spotify_track <- spotifyr::get_track(substr(url, 32, nchar(url)))
+  spotify_track <- tryCatch({
+    spotifyr::get_track(substr(url, 32, nchar(url)))
+  }, error = function(e) {
+      stop("URL cannot be matched with Spotify track at this time. Did you enter the URL correctly?")
+  })
 
   # every Spotify song seems to have an ISRC. when we search it on YouTube, we get the song's music video
-  tuber_match <- tuber::yt_search(term = paste(spotify_track$external_ids$isrc), max_results = 1, auth = "key")[1,]
+  tuber_match <- tryCatch({
+    tuber::yt_search(term = paste(spotify_track$external_ids$isrc), max_results = 1, auth = "key")[1,]
+  }, error = function(e) {
+    if (substr(e$message, nchar(e$message) - 18, nchar(e$message)) == "HTTP 403 Forbidden.") {
+      stop("YouTube API quota appears to be overloaded at this point. You may need to wait a minute, or you may have exceeded your quota for the day.")}
+  })
 
   if (ncol(tuber_match) == 0) {
 
     # if ISRC doesn't work, we will try matching by song title and artist name (album name seems to hinder correct matching)
-    tuber_match <- tuber::yt_search(term = paste(spotify_track$name, paste(spotify_track$artists$name, collapse = " ")), max_results = 1, auth = "key")[1,]
+    tuber_match <- tryCatch({
+      tuber::yt_search(term = paste(spotify_track$name, paste(spotify_track$artists$name, collapse = " ")), max_results = 1, auth = "key")[1,]
+    }, error = function(e) {
+      if (substr(e$message, nchar(e$message) - 18, nchar(e$message)) == "HTTP 403 Forbidden.") {
+        stop("YouTube API quota appears to be overloaded at this point. You may need to wait a minute, or you may have exceeded your quota for the day.")}
+    })
   }
 
   if (ncol(tuber_match) == 0) {
@@ -86,11 +100,26 @@ song_match <- function(url) {
 # this function matches a YouTube video to a Spotify song
 yt_to_spotify <- function(url) {
 
-  tuber_match <- tuber::get_video_details(video_ids = substr(url, 33, 43), auth = "key")
+  tuber_match <- tryCatch({
+    tuber::get_video_details(video_ids = substr(url, 33, 43), auth = "key")
+  }, error = function(e) {
+    if (substr(e$message, nchar(e$message) - 18, nchar(e$message)) == "HTTP 403 Forbidden.") {
+      stop("YouTube API quota appears to be overloaded at this point. You may need to wait a minute, or you may have exceeded your quota for the day.")}
+    else {stop("Did you provide a correct video URL as specified in the function guidelines?")}
+  },
+  warning = function(w) {
+    if (substr(w$message, 1, 29) == "No video details found for ID") {
+      stop("Did you provide a correct channel URL as specified in the function guidelines?")
+    }})
 
-  spotify_match <- spotifyr::search_spotify(paste(tuber_match$snippet_title, tuber_match$snippet_channelTitle), type = "track", limit = 1)
+  spotify_match <- spotifyr::search_spotify(paste(tuber_match$snippet_title, tuber_match$snippet_channelTitle), type = "track")[1,]
 
-  tuber_stats <- tuber::get_stats(video_ids = tuber_match$id, auth = "key")
+  tuber_stats <- tryCatch({
+    tuber::get_stats(video_ids = tuber_match$id, auth = "key")
+  }, error = function(e) {
+    if (substr(e$message, nchar(e$message) - 18, nchar(e$message)) == "HTTP 403 Forbidden.") {
+      stop("YouTube API quota appears to be overloaded at this point. You may need to wait a minute, or you may have exceeded your quota for the day.")}
+  })
 
   if (ncol(spotify_match) == 0) {
 
@@ -164,7 +193,7 @@ get_yt_matches <- function(top_tracks) {
 
   for (i in 1:nrow(top_tracks)) {
 
-    matches1 <- song_match(top_tracks$external_urls.spotify[i])
+    matches1 <- spotify_to_yt(top_tracks$external_urls.spotify[i])
 
     matches1 <- c(top_tracks$name[i], as.numeric(matches1$final_list$`Spotify popularity score (0-100)`), as.numeric(matches1$final_list$`Video view count on YouTube`), as.numeric(matches1$final_list$`Match confidence score (0-10)`), matches1$yt_channel, matches1$one_artist)
 

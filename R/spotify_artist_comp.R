@@ -24,17 +24,19 @@ globalVariables(c("one_artist", "yt_channel"))
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with [auth_creds()] before you can run examples
-#' # currently produces error when over YouTube API quota limit, so designated as don't run for now
+#' # remember you must set up your API credentials with the auth_creds function before you can run examples
 #' # using Noah Kahan
-#' \dontrun{
-#' artist_comp("https://open.spotify.com/artist/2RQXRUsr4IW1f3mKyKsy4B?si=69yU_685T96XI2mWtOGfLg")}
+#' spotify_artist_comp("https://open.spotify.com/artist/2RQXRUsr4IW1f3mKyKsy4B?si=69yU_685T96XI2mWtOGfLg")
+#' # using Kacey Musgraves
+#' spotify_artist_comp("https://open.spotify.com/artist/70kkdajctXSbqSMJbQO424?si=XXlTn6IrSR69auGUdtGzDQ")
 
-# note: we will add functionality so a YouTube channel can be matched to a Spotify artist and their popularity can be compared that way
+spotify_artist_comp <- function(url) {
 
-artist_comp <- function(url) {
-
-  spotify_artist <- spotifyr::get_artist(gsub("\\?.*", "", substr(url, 33, nchar(url))))
+  spotify_artist <- tryCatch({
+    spotifyr::get_artist(gsub("\\?.*", "", substr(url, 33, nchar(url))))
+  }, error = function(e) {
+      stop("URL cannot be matched with Spotify artist at this time. Did you enter the URL correctly?")
+  })
 
   message(paste("Retrieving Spotify statistics associated with", spotify_artist$name, "and matching their top songs to YouTube videos."))
 
@@ -50,7 +52,13 @@ artist_comp <- function(url) {
                   youtube_views_rank = rank(dplyr::desc(matches$youtube_view_count), ties.method = "min"))
 
   # matching most confidently matched YouTube channel ID with a YouTube channel and retrieving number of subscribers
-  channel_stats <- tuber::get_channel_stats(confident_match, auth = "key")
+  channel_stats <- tryCatch({
+    tuber::get_channel_stats(confident_match, auth = "key")
+  }, error = function(e) {
+    if (substr(e$message, nchar(e$message) - 18, nchar(e$message)) == "HTTP 403 Forbidden.") {
+      stop("YouTube API quota appears to be overloaded at this point. You may need to wait a minute, or you may have exceeded your quota for the day.")}
+  }
+)
 
   message(paste0("Retrieving YouTube subscriber count associated with ", channel_stats$title, "."))
 

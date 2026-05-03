@@ -81,4 +81,18 @@ auth_creds <- function(spotify_id, spotify_secret, yt_key) {
   }
 
   message("Your credentials have been saved!")
+
+  # testing credentials to ensure they will work
+
+  spotify_test <- tryCatch({
+    spotifyr::get_spotify_access_token()
+  }, error = function(e) {stop(e$message)}
+  )
+
+  tuber_test <- tryCatch({
+    tuber::get_channel_stats("UCXY5pi3MbsaP1WEgClmglsA", auth = "token")
+  }, error = function(e) {stop("Provided YouTube API key not working. Unless you have exceeded your API limit, this key is incorrect.")}
+  )
+
+message("Your provided credentials have been tested and are correct!")
 }

@@ -15,25 +15,25 @@
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with [auth_creds()] before you can run examples
-#' # currently produces error when over YouTube API quota limit, so designated as don't run for now
+#' # remember you must set up your API credentials with the auth_creds function before you can run examples
 #' # using Ordinary by Alex Warren
-#' \dontrun{
-#' match_spotify_song("https://open.spotify.com/track/6qqrTXSdwiJaq8SO0X2lSe?si=ba9ef90830b24d28")}
+#' match_spotify_song("https://open.spotify.com/track/6qqrTXSdwiJaq8SO0X2lSe?si=ba9ef90830b24d28")
+#' # using Opalite by Taylor Swift
+#' match_spotify_song("https://open.spotify.com/track/3yWuTOYDztXjZxdE2cIRUa?si=0cb8c4b508cf42aa")
 
 match_spotify_song <- function(url) {
 
-  output <- song_match(url)
+  output <- spotify_to_yt(url)
 
   if (output$matched == FALSE) {
 
-    message(paste("No potential YouTube video match was found for", output$spotify_track$name, "by", ifelse(length(output$spotify_track$artists$name) == 1, output$spotify_track$artists$name, paste(output$spotify_track$artists$name, collapse = "and")), "on Spotify."))
+    message(paste("No potential YouTube video match was found for", output$spotify_track$name, "by", ifelse(length(output$spotify_track$artists$name) == 1, output$spotify_track$artists$name, paste(output$spotify_track$artists$name, collapse = " and ")), "on Spotify."))
 
   }
 
   if (output$matched == TRUE) {
 
-    message(paste("Returning statistics for YouTube video corresponding to", output$spotify_track$name, "by", ifelse(length(output$spotify_track$artists$name) == 1, output$spotify_track$artists$name, paste(output$spotify_track$artists$name, collapse = "and")), "on Spotify."))
+    message(paste("Returning statistics for YouTube video corresponding to", output$spotify_track$name, "by", ifelse(length(output$spotify_track$artists$name) == 1, output$spotify_track$artists$name, paste(output$spotify_track$artists$name, collapse = " and ")), "on Spotify."))
 
     message(paste0("YouTube video was identified as ", output$tuber_match$title, " on the channel ", output$tuber_match$channelTitle, "."))
 }

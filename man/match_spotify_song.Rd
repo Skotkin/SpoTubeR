@@ -24,9 +24,9 @@ Before running this function, make sure you've set your API
 credentials using \code{\link[=auth_creds]{auth_creds()}}.
 }
 \examples{
-# remember you must set up your API credentials with [auth_creds()] before you can run examples
-# currently produces error when over YouTube API quota limit, so designated as don't run for now
+# remember you must set up your API credentials with the auth_creds function before you can run examples
 # using Ordinary by Alex Warren
-\dontrun{
-match_spotify_song("https://open.spotify.com/track/6qqrTXSdwiJaq8SO0X2lSe?si=ba9ef90830b24d28")}
+match_spotify_song("https://open.spotify.com/track/6qqrTXSdwiJaq8SO0X2lSe?si=ba9ef90830b24d28")
+# using Opalite by Taylor Swift
+match_spotify_song("https://open.spotify.com/track/3yWuTOYDztXjZxdE2cIRUa?si=0cb8c4b508cf42aa")
 }

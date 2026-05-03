@@ -47,11 +47,11 @@ SpoTubeR::billboard100_apr26 |> View()
 
 Looking at the data set, I can see that the #1 artist on 4/26/26 was Ella Langley. I wonder how her music compares across platforms?
 
-### Compare artists' content on Spotify and YouTube with artist_comp()
+### Compare artists' content on Spotify and YouTube with spotify_artist_comp()
 ```{r}
 # Inputting the spotify link (provided in the data set) to Ella Langley's top song into the function
-SpoTubeR::artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=7yliDpVUTXCUxKh_SuuPrw')[[2]] |> 
-  kable(caption = "Ella Langley's music on Spotify vs YouTube", col.names = c("Song Title", "Spotify Popularity", "YouTube Views", "Match Confidence", "Spotify Popularity Rank", "YouTube Views Rank"))
+#SpoTubeR::spotify_artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=7yliDpVUTXCUxKh_SuuPrw')[[2]] |> 
+#  kable(caption = "Ella Langley's music on Spotify vs YouTube", col.names = c("Song Title", "Spotify Popularity", "YouTube Views", "Match Confidence", "Spotify Popularity Rank", "YouTube Views Rank"))
 ```
 
 After looking on Spotify, I can see that Ella Langley's is signed with Sony Music Nashville. I wonder what other musicians they have signed with?
@@ -60,8 +60,8 @@ After looking on Spotify, I can see that Ella Langley's is signed with Sony Musi
 
 ```{r}
 # Using the Label Sony Music Nashville
-SpoTubeR::label_comp('Sony Music Nashville')[[2]] |> 
-  kable(caption = "Label's Top 5 Artist's Info", col.names = c("Song Title", "Spotify Popularity", "YouTube Views", "Match Confidence", "Spotify Popularity Rank", "YouTube Views Rank"))
+#SpoTubeR::label_comp('Sony Music Nashville')[[2]] |> 
+#  kable(caption = "Label's Top 5 Artist's Info", col.names = c("Song Title", "Spotify Popularity", "YouTube Views", "Match Confidence", "Spotify Popularity Rank", "YouTube Views Rank"))
 ```
 
 Lets say I wanted to conduct my own analyses without using the top 100 data set
@@ -70,8 +70,8 @@ Lets say I wanted to conduct my own analyses without using the top 100 data set
 
 ```{r}
 # Using Noah Kahn's Stick Season
-SpoTubeR::match_spotify_song('https://open.spotify.com/track/0mflMxspEfB0VbI1kyLiAv?si=9c5d9964b777475d') |> 
-  kable(caption = "Noah Kahn's Stick Season on Spotify vs YouTube", col.names = c("Spotify Popularity", "YouTube Views", "Match Confidence"))
+#SpoTubeR::match_spotify_song('https://open.spotify.com/track/0mflMxspEfB0VbI1kyLiAv?si=9c5d9964b777475d') |> 
+#  kable(caption = "Noah Kahn's Stick Season on Spotify vs YouTube", col.names = c("Spotify Popularity", "YouTube Views", "Match Confidence"))
 ```
 
 How about the other way around?
@@ -79,8 +79,8 @@ How about the other way around?
 ### Match YouTube music videos to their artist's Spotify song with match_yt_song
 ```{r}
 # Using Lady Gaga and Doechii's brand new song Runway
-SpoTubeR::match_yt_song('https://www.youtube.com/watch?v=XXIX2WnfbpE') |> 
-  kable(caption = "Lady Gaga and Doechii's Runway on YouTube vs Spotify", col.names = c("Spotify Popularity", "YouTube Views", "Match Confidence"))
+#SpoTubeR::match_yt_song('https://www.youtube.com/watch?v=XXIX2WnfbpE') |> 
+#  kable(caption = "Lady Gaga and Doechii's Runway on YouTube vs Spotify", col.names = c("Spotify Popularity", "YouTube Views", "Match Confidence"))
 ```
 
 ## Visualizations with SpoTubeR
@@ -93,9 +93,9 @@ WORK IN PROGRESS
 ```{r}
 #top_10 <- billboard100_apr26 |> dplyr::filter(rank == 1:10) |> dplyr::select(spotify_link)
 
-#for (i in 1:length(top_10)) {sapply(GET(top_10$spotify_link), SpoTubeR::artist_comp)}
+#for (i in 1:length(top_10)) {sapply(GET(top_10$spotify_link), SpoTubeR::spotify_artist_comp)}
 
-# or apply(top_10, 1, SpoTubeR::artist_comp)
+# or apply(top_10, 1, SpoTubeR::spotify_artist_comp)
   
   #ggplot(aes(x = )) + geom_histogram() + coord_flip() + labs(title = "Distribution of YouTube Views for Billboard's Hot 100 songs on April 26th, 2026", x = "Song Titles", y = "Views")
 ```

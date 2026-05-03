@@ -27,10 +27,11 @@ globalVariables(c("one_artist", "yt_channel"))
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with [auth_creds()] before you can run examples
-#' # currently produces error when over YouTube API quota limit, so designated as don't run for now
+#' # remember you must set up your API credentials with the auth_creds function before you can run examples
 #' # using Mercury Records
-#' \dontrun{label_comp("Mercury Records")}
+#' label_comp("Mercury Records")
+#' # using Sony Music Entertainment
+#' label_comp("Sony Music Entertainment")
 
 label_comp <- function(label) {
 
@@ -74,7 +75,13 @@ label_comp <- function(label) {
   }
 
   # for each artist, matching most confidently matched YouTube channel ID with a YouTube channel and retrieving number of subscribers
-  channel_stats <- tuber::get_channel_stats(confident_match_all, auth = "key")
+  channel_stats <- tryCatch({
+    tuber::get_channel_stats(confident_match_all, auth = "key")
+  }, error = function(e) {
+    if (substr(e$message, nchar(e$message) - 18, nchar(e$message)) == "HTTP 403 Forbidden.") {
+      stop("YouTube API quota appears to be overloaded at this point. You may need to wait a minute, or you may have exceeded your quota for the day.")}
+  }
+  )
 
   for (i in 1:nrow(artists)) {
 

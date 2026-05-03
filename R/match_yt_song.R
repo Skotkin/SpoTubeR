@@ -18,13 +18,11 @@
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with [auth_creds()] before you can run examples
-#' # currently produces error when over YouTube API quota limit, so designated as don't run for now
+#' # remember you must set up your API credentials with the auth_creds function before you can run examples
 #' # using Ordinary by Alex Warren
-#' \dontrun{
-#' match_yt_song("https://www.youtube.com/watch?v=u2ah9tWTkmk")}
-
-# function is not yet good at matching to correct song. will try to improve for final submission
+#' match_yt_song("https://www.youtube.com/watch?v=u2ah9tWTkmk")
+#' # using Opalite by Taylor Swift
+#' match_yt_song("https://www.youtube.com/watch?v=1FVF-9KQiPo")
 
 match_yt_song <- function(url) {
 
@@ -40,7 +38,7 @@ match_yt_song <- function(url) {
 
     message(paste("Returning statistics for Spotify song corresponding to", output$tuber_match$snippet_title, "from channel", output$tuber_match$snippet_channelTitle, "on YouTube"))
 
-    message(paste0("Spotify song was identified as ", output$spotify_match$name, " by ", ifelse(length(output$spotify_match$artists[[1]]$name) == 1, output$spotify_match$artists[[1]]$name, paste(output$spotify_match$artists[[1]]$name, collapse = "and")), "."))
+    message(paste0("Spotify song was identified as ", output$spotify_match$name, " by ", ifelse(length(output$spotify_match$artists[[1]]$name) == 1, output$spotify_match$artists[[1]]$name, paste(output$spotify_match$artists[[1]]$name, collapse = " and ")), "."))
   }
 
   return(output$final_list)
