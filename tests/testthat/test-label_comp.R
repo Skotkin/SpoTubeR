@@ -4,7 +4,7 @@
 
 # -an invalid record label name (the "No artists were returned" error message should appear)
 testthat::test_that("label name doesn't exist", {
-  testthat::expect_error(label_comp('kfflkmmawlgerkj'))
+  testthat::expect_error(label_comp("kfflkmmawlgerkj"))
 })
 
 # -a non-character type
@@ -19,12 +19,12 @@ testthat::test_that("messages work", {
 
 # checking that the function returns a list
 testthat::test_that("returns list", {
- testthat::expect_type(label_comp("Universal"), 'list')
+  testthat::expect_type(label_comp("Universal"), "list")
 })
 
 # checking that the function works for labels with less than 5 associated artists
 testthat::test_that("Small labels work", {
-  #pondless has one artist (independent label)
+  # pondless has one artist (independent label)
   testthat::expect_no_error(label_comp("pondless"))
 })
 

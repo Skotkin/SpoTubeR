@@ -32,16 +32,13 @@ globalVariables(c("one_artist", "yt_channel"))
 #' label_comp("Mercury Records")
 #' # using Sony Music Entertainment
 #' label_comp("Sony Music Entertainment")
-
 label_comp <- function(label) {
-
   # retrieving 5 artists associated with the given record label
   # am using capture.output to suppress the print output that would otherwise be produced
   utils::capture.output(artists <- spotifyr::get_label_artists(label, limit = 5))
 
   # producing error if no artists were returned (suggesting invalid label name)
   if (nrow(artists) == 0) {
-
     stop("No artists were returned. Did you enter the label name correctly?")
   }
 
@@ -58,7 +55,6 @@ label_comp <- function(label) {
 
 
   for (i in 1:nrow(artists)) {
-
     message(paste("Retrieving Spotify statistics associated with", artists$name[i], "and matching their top songs to YouTube videos."))
 
     # retrieving artist's top tracks (up to 5)
@@ -74,8 +70,10 @@ label_comp <- function(label) {
     # ranking top tracks by Spotify popularity and YouTube view count
     matches <- matches |>
       dplyr::select(!c(yt_channel, one_artist)) |>
-      dplyr::mutate(spotify_popularity_rank = rank(dplyr::desc(matches$spotify_popularity_score), ties.method = "min"),
-                    youtube_views_rank = rank(dplyr::desc(matches$youtube_view_count), ties.method = "min"))
+      dplyr::mutate(
+        spotify_popularity_rank = rank(dplyr::desc(matches$spotify_popularity_score), ties.method = "min"),
+        youtube_views_rank = rank(dplyr::desc(matches$youtube_view_count), ties.method = "min")
+      )
 
     # adding artist info to initialized lists/values
     matches_all[i] <- list(matches)
@@ -86,16 +84,18 @@ label_comp <- function(label) {
   }
 
   # for each artist, matching most confidently matched YouTube channel ID with a YouTube channel and retrieving number of subscribers
-  channel_stats <- tryCatch({
-    tuber::get_channel_stats(confident_match_all, auth = "key")
-  }, error = function(e) {
-    if (substr(e$message, nchar(e$message) - 18, nchar(e$message)) == "HTTP 403 Forbidden.") {
-      stop("YouTube API quota appears to be overloaded at this point. You may need to wait a minute, or you may have exceeded your quota for the day.")}
-  }
+  channel_stats <- tryCatch(
+    {
+      tuber::get_channel_stats(confident_match_all, auth = "key")
+    },
+    error = function(e) {
+      if (substr(e$message, nchar(e$message) - 18, nchar(e$message)) == "HTTP 403 Forbidden.") {
+        stop("YouTube API quota appears to be overloaded at this point. You may need to wait a minute, or you may have exceeded your quota for the day.")
+      }
+    }
   )
 
   for (i in 1:nrow(artists)) {
-
     message(paste0("Retrieving YouTube subscriber count associated with ", channel_stats$title[i], "."))
 
     # retrieving YouTube subscriber count for artist, or using NA if subscriber count is hidden
@@ -103,7 +103,8 @@ label_comp <- function(label) {
 
     # creating output list for given artist
     output[i] <- list(list(list("Artist's Spotify popularity score (0-100)" = artists$popularity[i], "Artist's Spotify follower count" = artists$followers.total[i], "Artist's YouTube channel subscriber count" = yt_subscribers),
-                      "Artist's top Spotify songs" = matches_all[i]))
+      "Artist's top Spotify songs" = matches_all[i]
+    ))
   }
 
   # assigning names (artist names) to output
