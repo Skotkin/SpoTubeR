@@ -12,8 +12,7 @@
 #'    will be retrievable even in new R sessions.
 #'
 #' @return This function does not return anything. It does provide a message
-#' informing the user that their credentials have been saved and tests if those
-#' credentials are valid.
+#' informing the user that their credentials have been saved.
 #'
 #' @param spotify_id Your Spotify API client ID (as character type).
 #' @param spotify_secret Your Spotify API client secret (as character type).
@@ -21,12 +20,14 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{auth_creds(spotify_id = "YOUR ID HERE",
-#' spotify_secret = "YOUR SECRET HERE",
-#' yt_key = "YOUR SECRET HERE")}
-
+#' @examples \dontrun{
+#' auth_creds(
+#'   spotify_id = "YOUR ID HERE",
+#'   spotify_secret = "YOUR SECRET HERE",
+#'   yt_key = "YOUR SECRET HERE"
+#' )
+#' }
 auth_creds <- function(spotify_id, spotify_secret, yt_key) {
-
   # checks if R environ exists, and creates it if not
   renv <- file.path(Sys.getenv("HOME"), ".Renviron")
   if (!file.exists(renv)) {
@@ -65,7 +66,6 @@ auth_creds <- function(spotify_id, spotify_secret, yt_key) {
 
   # if any values were replaced, writing the new file to the R environ
   if (replaced_spotify_id == TRUE | replaced_spotify_secret == TRUE | replaced_yt_key == TRUE) {
-
     write(oldenv, renv, sep = "\n", append = FALSE)
   }
 
@@ -83,18 +83,4 @@ auth_creds <- function(spotify_id, spotify_secret, yt_key) {
   }
 
   message("Your credentials have been saved!")
-
-  # testing credentials to ensure they will work
-
-  spotify_test <- tryCatch({
-    spotifyr::get_spotify_access_token()
-  }, error = function(e) {stop(e$message)}
-  )
-
-  tuber_test <- tryCatch({
-    tuber::get_channel_stats("UCXY5pi3MbsaP1WEgClmglsA", auth = "key")
-  }, error = function(e) {stop("Provided YouTube API key not working. Unless you have exceeded your API limit, this key is incorrect.")}
-  )
-
-message("Your provided credentials have been tested and are correct!")
 }

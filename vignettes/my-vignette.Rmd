@@ -40,7 +40,8 @@ Now that you have your Spotify and YouTube access tokens, you can start experime
 To explore the basic functions inside of SpoTubeR, we'll use a dataset containing billboard's 100 most popular current songs on April 26th, 2026. 
 
 ```{r}
-#SpoTubeR::billboard100_apr26 |> View()
+SpoTubeR::billboard100_apr26 |>
+  View()
 ```
 
 ## Function Examples
@@ -50,9 +51,9 @@ Looking at the data set, I can see that the #1 artist on 4/26/26 was Ella Langle
 ### Compare artists' content on Spotify and YouTube with spotify_artist_comp()
 ```{r}
 # Inputting the spotify link (provided in the data set) to Ella Langley's top song into the function
-#SpoTubeR::spotify_artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=7yliDpVUTXCUxKh_SuuPrw')[[2]] |> 
-  #as.data.frame() |> 
-  #knitr::kable(caption = "Ella Langley's music on Spotify vs YouTube", col.names = c("Song Title", "Spotify Popularity", "YouTube Views", "Match Confidence", "Spotify Popularity Rank", "YouTube Views Rank"))
+SpoTubeR::spotify_artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=7yliDpVUTXCUxKh_SuuPrw')[[2]] |> 
+  as.data.frame() |> 
+  knitr::kable(caption = "Ella Langley's music on Spotify vs YouTube", col.names = c("Song Title", "Spotify Popularity", "YouTube Views", "Match Confidence", "Spotify Popularity Rank", "YouTube Views Rank"))
 ```
 
 After looking on Spotify, I can see that Ella Langley's is signed with Sony Music Nashville. I wonder what other musicians they have signed with?
@@ -61,9 +62,9 @@ After looking on Spotify, I can see that Ella Langley's is signed with Sony Musi
 
 ```{r}
 # Using the Label Sony Music Nashville
-#SpoTubeR::label_comp('Sony Music Nashville')[[2]] |> 
-  #as.data.frame() |> 
-  #knitr::kable(caption = "Label's Top 5 Artist's Info", col.names = c("Song Title", "Spotify Popularity", "YouTube Views", "Match Confidence", "Spotify Popularity Rank", "YouTube Views Rank"))
+SpoTubeR::label_comp('Sony Music Nashville')[[2]] |> 
+  as.data.frame() |> 
+  knitr::kable(caption = "Label's Top 5 Artist's Info", col.names = c("Song Title", "Spotify Popularity", "YouTube Views", "Match Confidence", "Spotify Popularity Rank", "YouTube Views Rank"))
 ```
 
 Lets say I wanted to conduct my own analyses without using the top 100 data set
@@ -72,9 +73,9 @@ Lets say I wanted to conduct my own analyses without using the top 100 data set
 
 ```{r}
 # Using Noah Kahn's Stick Season
-#SpoTubeR::match_spotify_song('https://open.spotify.com/track/0mflMxspEfB0VbI1kyLiAv?si=9c5d9964b777475d') |>
-#as.data.frame() |>
-  #knitr::kable(caption = "Noah Kahn's Stick Season on Spotify vs YouTube", col.names = c("Spotify Popularity", "YouTube Views", "Match Confidence"))
+SpoTubeR::match_spotify_song('https://open.spotify.com/track/0mflMxspEfB0VbI1kyLiAv?si=9c5d9964b777475d') |>
+  as.data.frame() |>
+  knitr::kable(caption = "Noah Kahn's Stick Season on Spotify vs YouTube", col.names = c("Spotify Popularity", "YouTube Views", "Match Confidence"))
 ```
 
 How about the other way around?
@@ -82,9 +83,9 @@ How about the other way around?
 ### Match YouTube music videos to their artist's Spotify song with match_yt_song
 ```{r}
 # Using Lady Gaga and Doechii's brand new song Runway
-#SpoTubeR::match_yt_song('https://www.youtube.com/watch?v=XXIX2WnfbpE') |> 
-  #as.data.frame() |>
-  #knitr::kable(caption = "Lady Gaga and Doechii's Runway on YouTube vs Spotify", col.names = c("Spotify Popularity", "YouTube Views", "Match Confidence"))
+SpoTubeR::match_yt_song('https://www.youtube.com/watch?v=XXIX2WnfbpE') |> 
+  as.data.frame() |>
+  knitr::kable(caption = "Lady Gaga and Doechii's Runway on YouTube vs Spotify", col.names = c("Spotify Popularity", "YouTube Views", "Match Confidence"))
 ```
 
 ## Visualizations with SpoTubeR
@@ -93,17 +94,24 @@ Finally, I want to compare the YouTube music video views and Spotify popularity 
 
 # Most YouTube Views
 ```{r}
-#top_15 <- billboard100_apr26 |> dplyr::filter(rank == 1:15) |> dplyr::select(spotify_link, track_name) |>
-  #mutate(views = NA, popularity = NA) 
- #for (i in 1:15) {
-   #base <- SpoTubeR::match_spotify_song(top_15$spotify_link[i])
-   #top_15$views[i] <- base[[2]]
-   #top_15$popularity[i] <- base[[1]]
-   #}
+top_15 <- billboard100_apr26 |>
+  dplyr::filter(rank %in% 1:15) |>
+  dplyr::select(spotify_link, track_name) |>
+  mutate(views = NA, popularity = NA)
 
-#as.data.frame(top_15) |> 
-  #ggplot2::ggplot(aes(x = views, y = popularity)) + geom_point() + theme_minimal() + labs(title = "Distribution of YouTube Views and Spotify Popularity for Billboard's Hot \n 100 songs on April 26th, 2026", x = "YouTube Views", y = "Spotify Popularity Score") + geom_smooth(method = "lm") + annotate("label", x = 0.8, y = 50, size = 3, 
-           #label = paste("Corr.", round(cor(top_15$views, top_15$popularity), 3)), color = "red", fontface = "bold")
+ for (i in 1:15) {
+   base <- SpoTubeR::match_spotify_song(top_15$spotify_link[i])
+   top_15$views[i] <- base[[2]]
+   top_15$popularity[i] <- base[[1]]
+   }
+
+as.data.frame(top_15) |>
+  ggplot2::ggplot(aes(x = views, y = popularity)) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "Distribution of YouTube Views and Spotify Popularity for Billboard's Hot \n 100 songs on April 26th, 2026", x = "YouTube Views", y = "Spotify Popularity Score") +
+  geom_smooth(method = "lm") +
+  annotate("label", x = 0.8, y = 50, size = 3, label = paste("Corr.", round(cor(top_15$views, top_15$popularity), 3)), color = "red", fontface = "bold")
 ```
 
-As we can see that YouTube views and Spotify Popularity scores have a positive correlation of ____. This makes sense because songs with greater Spotify popularity are expected to have more views on YouTube. However, it also makes sense that the correlation is not perfect since the Spotify popularity score is based on the song's popularity at a given point in time, while the YouTube view count is more of a measure of cumulative popularity over time (if a song is on YouTube for longer, it tends to have more views).
+As we can see that YouTube views and Spotify popularity scores have a positive correlation of 0.281. This makes sense because songs with greater Spotify popularity are expected to have more views on YouTube. However, it also makes sense that the correlation is not perfect since the Spotify popularity score is based on the song's popularity at a given point in time, while the YouTube view count is more of a measure of cumulative popularity over time (if a song is on YouTube for longer, it tends to have more views).

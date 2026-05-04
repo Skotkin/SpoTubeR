@@ -20,26 +20,21 @@
 #' match_spotify_song("https://open.spotify.com/track/6qqrTXSdwiJaq8SO0X2lSe?si=ba9ef90830b24d28")
 #' # using Opalite by Taylor Swift
 #' match_spotify_song("https://open.spotify.com/track/3yWuTOYDztXjZxdE2cIRUa?si=0cb8c4b508cf42aa")
-
 match_spotify_song <- function(url) {
-
   # attempting to match Spotify song to YouTube video and retrieving associated data
   output <- spotify_to_yt(url)
 
   # returning message if Spotify song is not matched successfully
   if (output$matched == FALSE) {
-
     message(paste("No potential YouTube video match was found for", output$spotify_track$name, "by", ifelse(length(output$spotify_track$artists$name) == 1, output$spotify_track$artists$name, paste(output$spotify_track$artists$name, collapse = " and ")), "on Spotify."))
-
   }
 
   # returning messages if Spotify song is not matched successfully
   if (output$matched == TRUE) {
-
     message(paste("Returning statistics for YouTube video corresponding to", output$spotify_track$name, "by", ifelse(length(output$spotify_track$artists$name) == 1, output$spotify_track$artists$name, paste(output$spotify_track$artists$name, collapse = " and ")), "on Spotify."))
 
     message(paste0("YouTube video was identified as ", output$tuber_match$title, " on the channel ", output$tuber_match$channelTitle, "."))
-}
+  }
 
-return(output$final_list)
+  return(output$final_list)
 }

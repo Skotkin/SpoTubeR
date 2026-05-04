@@ -39,7 +39,7 @@ Example:
 ```{r}
 library(SpoTubeR)
 
-#auth_creds(spotify_id = "YOUR ID HERE", spotify_secret = "YOUR SECRET HERE", yt_key = "YOUR SECRET HERE")
+# auth_creds(spotify_id = "YOUR ID HERE", spotify_secret = "YOUR SECRET HERE", yt_key = "YOUR SECRET HERE")
 ```
 
 
@@ -50,7 +50,7 @@ This is a basic example of a SpoTubeR function and its output:
 ```{r example}
 library(SpoTubeR)
 
-spotify_artist_comp('https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=eS8ItlNFTtmtUOE5z5WwbA')
+spotify_artist_comp("https://open.spotify.com/artist/6BRxQ8cD3eqnrVj6WKDok8?si=eS8ItlNFTtmtUOE5z5WwbA")
 ```
 
 ## License

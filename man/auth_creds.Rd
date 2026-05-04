@@ -32,7 +32,11 @@ only needs to run \code{\link[=auth_creds]{auth_creds()}} once ever; after this,
 will be retrievable even in new R sessions.
 }
 \examples{
-\dontrun{auth_creds(spotify_id = "YOUR ID HERE",
-spotify_secret = "YOUR SECRET HERE",
-yt_key = "YOUR SECRET HERE")}
+\dontrun{
+auth_creds(
+  spotify_id = "YOUR ID HERE",
+  spotify_secret = "YOUR SECRET HERE",
+  yt_key = "YOUR SECRET HERE"
+)
+}
 }
