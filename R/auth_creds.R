@@ -92,7 +92,7 @@ auth_creds <- function(spotify_id, spotify_secret, yt_key) {
   )
 
   tuber_test <- tryCatch({
-    tuber::get_channel_stats("UCXY5pi3MbsaP1WEgClmglsA", auth = "token")
+    tuber::get_channel_stats("UCXY5pi3MbsaP1WEgClmglsA", auth = "key")
   }, error = function(e) {stop("Provided YouTube API key not working. Unless you have exceeded your API limit, this key is incorrect.")}
   )
 
