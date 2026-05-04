@@ -1,5 +1,3 @@
-# IDEAS FOR TESTS
-
 # testing what happens if R environ does vs. doesn't already exist on the user's computer
 testthat::test_that("", {
   testthat::expect_error(auth_creds())
