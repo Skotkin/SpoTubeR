@@ -27,8 +27,7 @@ globalVariables(c("one_artist", "yt_channel"))
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with the auth_creds function
-#' # before you can run examples
+#' # you must set up your API credentials with the auth_creds function first
 #' # using Mercury Records
 #' label_comp("Mercury Records")
 label_comp <- function(label) {

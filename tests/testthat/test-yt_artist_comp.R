@@ -16,15 +16,12 @@ testthat::test_that("type is a character", {
   testthat::expect_error(yt_artist_comp(12))
 })
 
-testthat::test_that("two messages works", {
+testthat::test_that("two messages and list work", {
   # checking if the function prints message output when provided with a valid input
-  testthat::expect_message(object = yt_artist_comp("https://www.youtube.com/channel/UCqC_GY2ZiENFz2pwL0cSfAw"), regexp = "Retrieving YouTube subscriber count associated with.*")
-  testthat::expect_message(object = yt_artist_comp("https://www.youtube.com/channel/UCqC_GY2ZiENFz2pwL0cSfAw"), regexp = "Retrieving Spotify statistics associated with.*")
-})
-
-testthat::test_that("list return works", {
-  # checking that the function returns a list
-  testthat::expect_identical(class(yt_artist_comp("https://www.youtube.com/channel/UCqC_GY2ZiENFz2pwL0cSfAw")), "list")
+  # and checking if the function returns a list
+  testthat::expect_message(yt_artist_comp("https://www.youtube.com/channel/UCqC_GY2ZiENFz2pwL0cSfAw"), regexp = "Retrieving YouTube subscriber count associated with.*")
+  testthat::expect_message(artist <- yt_artist_comp("https://www.youtube.com/channel/UCqC_GY2ZiENFz2pwL0cSfAw"), regexp = "Retrieving Spotify statistics associated with.*")
+  testthat::expect_identical(class(artist), "list")
 })
 
 testthat::test_that("less common artists works", {

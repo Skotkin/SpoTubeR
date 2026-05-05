@@ -1,12 +1,9 @@
 # checking that the appropriate 2 messages are printed when a YouTube video match is found
-testthat::test_that("match messages work", {
+# and checking that output is list
+testthat::test_that("match messages and list works", {
   testthat::expect_message(object = match_spotify_song("https://open.spotify.com/track/1fzAuUVbzlhZ1lJAx9PtY6?si=cf2a7c01466643b0"), regexp = "Returning statistics for YouTube video corresponding to.*")
-  testthat::expect_message(object = match_spotify_song("https://open.spotify.com/track/1fzAuUVbzlhZ1lJAx9PtY6?si=cf2a7c01466643b0"), regexp = "YouTube video was identified as.*")
-})
-
-# checking that the output is a list
-testthat::test_that("returns list", {
-  testthat::expect_type(match_spotify_song("https://open.spotify.com/track/1fzAuUVbzlhZ1lJAx9PtY6?si=cf2a7c01466643b0"), "list")
+  testthat::expect_message(song <- match_spotify_song("https://open.spotify.com/track/1fzAuUVbzlhZ1lJAx9PtY6?si=cf2a7c01466643b0"), regexp = "YouTube video was identified as.*")
+  testthat::expect_type(song, "list")
 })
 
 # testing what happens if user inputs:

@@ -25,8 +25,7 @@ globalVariables(c("one_artist", "yt_channel"))
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with the auth_creds function
-#' #  before you can run examples
+#' # you must set up your API credentials with the auth_creds function first
 #' # using Noah Kahan
 #' yt_artist_comp("https://www.youtube.com/channel/UCXY5pi3MbsaP1WEgClmglsA")
 yt_artist_comp <- function(url) {

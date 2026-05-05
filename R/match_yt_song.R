@@ -18,8 +18,7 @@
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with the auth_creds function
-#' #  before you can run examples
+#' # you must set up your API credentials with the auth_creds function first
 #' # using Ordinary by Alex Warren
 #' match_yt_song("https://www.youtube.com/watch?v=u2ah9tWTkmk")
 match_yt_song <- function(url) {

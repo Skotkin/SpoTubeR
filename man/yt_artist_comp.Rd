@@ -33,9 +33,7 @@ Before running this function, make sure you've set your API
 credentials using \code{\link[=auth_creds]{auth_creds()}}.
 }
 \examples{
-# remember you must set up your API credentials with the auth_creds function before you can run examples
+# you must set up your API credentials with the auth_creds function first
 # using Noah Kahan
 yt_artist_comp("https://www.youtube.com/channel/UCXY5pi3MbsaP1WEgClmglsA")
-# using Kacey Musgraves
-yt_artist_comp("https://www.youtube.com/channel/UCAxUOuaNs8e63_MRqhTdmaQ")
 }

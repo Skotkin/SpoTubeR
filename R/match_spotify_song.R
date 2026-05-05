@@ -15,10 +15,10 @@
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with the auth_creds function
-#' #  before you can run examples
+#' # you must set up your API credentials with the auth_creds function first
 #' # using Ordinary by Alex Warren
-#' match_spotify_song("https://open.spotify.com/track/6qqrTXSdwiJaq8SO0X2lSe?si=ba9ef90830b24d28")
+#' match_spotify_song("https://open.spotify.com/track/6qqrTXSdwiJaq8SO0X2lSe?
+#' si=ba9ef90830b24d28")
 match_spotify_song <- function(url) {
   # attempting to match Spotify song to YouTube video and retrieving associated data
   output <- spotify_to_yt(url)

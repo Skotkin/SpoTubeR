@@ -35,9 +35,7 @@ Before running this function, make sure you've set your API
 credentials using \code{\link[=auth_creds]{auth_creds()}}.
 }
 \examples{
-# remember you must set up your API credentials with the auth_creds function before you can run examples
+# you must set up your API credentials with the auth_creds function first
 # using Mercury Records
 label_comp("Mercury Records")
-# using Sony Music Entertainment
-label_comp("Sony Music Entertainment")
 }

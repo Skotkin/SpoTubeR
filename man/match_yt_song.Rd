@@ -25,9 +25,7 @@ Before running this function, make sure you've set your API
 credentials using \code{\link[=auth_creds]{auth_creds()}}.
 }
 \examples{
-# remember you must set up your API credentials with the auth_creds function before you can run examples
+# you must set up your API credentials with the auth_creds function first
 # using Ordinary by Alex Warren
 match_yt_song("https://www.youtube.com/watch?v=u2ah9tWTkmk")
-# using Opalite by Taylor Swift
-match_yt_song("https://www.youtube.com/watch?v=1FVF-9KQiPo")
 }

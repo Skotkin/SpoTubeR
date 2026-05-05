@@ -13,20 +13,7 @@ spotify_to_yt <- function(url) {
     }
   )
 
-  # every Spotify song seems to have an ISRC. when we search it on YouTube, we get the song's music video
-  tuber_match <- tryCatch(
-    {
-      tuber::yt_search(term = paste(spotify_track$external_ids$isrc), max_results = 1, auth = "key")[1, ]
-    },
-    error = function(e) {
-      if (substr(e$message, nchar(e$message) - 18, nchar(e$message)) == "HTTP 403 Forbidden.") {
-        stop("YouTube API quota appears to be overloaded at this point. You may need to wait a minute, or you may have exceeded your quota for the day.")
-      }
-    }
-  )
-
-  if (ncol(tuber_match) == 0) {
-    # if ISRC doesn't work, we will try matching by song title and artist name (album name seems to hinder correct matching)
+  # we will try matching by song title and artist name (album name seems to hinder correct matching)
     tuber_match <- tryCatch(
       {
         tuber::yt_search(term = paste(spotify_track$name, paste(spotify_track$artists$name, collapse = " ")), max_results = 1, auth = "key")[1, ]
@@ -37,7 +24,6 @@ spotify_to_yt <- function(url) {
         }
       }
     )
-  }
 
   if (ncol(tuber_match) == 0) {
     # returning suitable data if no YouTube match is found
