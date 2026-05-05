@@ -137,13 +137,13 @@ yt_to_spotify <- function(url) {
   )
 
   # matching YouTube video with Spotify song through searching video title and channel name on Spotify and taking the first result
-  # sets spotify_match to NA if error is produced (as an error is produced when no match is found)
+  # sets spotify_match to NULL if error is produced (as an error is produced when no match is found)
   spotify_match <- tryCatch(
     {
       spotifyr::search_spotify(paste(tuber_match$snippet_title, tuber_match$snippet_channelTitle), type = "track")[1, ]
     },
     error = function(e) {
-      NA
+      NULL
     }
   )
 
@@ -159,7 +159,7 @@ yt_to_spotify <- function(url) {
     }
   )
 
-  if (is.na(spotify_match)) {
+  if (is.null(spotify_match)) {
     # if no Spotify song is found to match YouTube video, returns relevant data
     output <- list(
       matched = FALSE,

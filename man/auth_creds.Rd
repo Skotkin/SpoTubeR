@@ -15,8 +15,7 @@ auth_creds(spotify_id, spotify_secret, yt_key)
 }
 \value{
 This function does not return anything. It does provide a message
-informing the user that their credentials have been saved and tests if those
-credentials are valid.
+informing the user that their credentials have been saved.
 }
 \description{
 This function must be run before the other SpoTubeR functions can be used.
