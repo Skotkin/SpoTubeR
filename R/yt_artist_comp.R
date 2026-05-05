@@ -25,11 +25,10 @@ globalVariables(c("one_artist", "yt_channel"))
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with the auth_creds function before you can run examples
+#' # remember you must set up your API credentials with the auth_creds function
+#' #  before you can run examples
 #' # using Noah Kahan
 #' yt_artist_comp("https://www.youtube.com/channel/UCXY5pi3MbsaP1WEgClmglsA")
-#' # using Kacey Musgraves
-#' yt_artist_comp("https://www.youtube.com/channel/UCAxUOuaNs8e63_MRqhTdmaQ")
 yt_artist_comp <- function(url) {
   # retrieving statistics for YouTube channel corresponding to given URL
   channel_stats <- tryCatch(

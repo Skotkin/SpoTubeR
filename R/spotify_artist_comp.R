@@ -24,11 +24,11 @@ globalVariables(c("one_artist", "yt_channel"))
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with the auth_creds function before you can run examples
+#' # remember you must set up your API credentials with the auth_creds function
+#' #  before you can run examples
 #' # using Noah Kahan
-#' spotify_artist_comp("https://open.spotify.com/artist/2RQXRUsr4IW1f3mKyKsy4B?si=69yU_685T96XI2mWtOGfLg")
-#' # using Kacey Musgraves
-#' spotify_artist_comp("https://open.spotify.com/artist/70kkdajctXSbqSMJbQO424?si=XXlTn6IrSR69auGUdtGzDQ")
+#' spotify_artist_comp("https://open.spotify.com/artist/2RQXRUsr4IW1f3mKyKsy4B?
+#' si=69yU_685T96XI2mWtOGfLg")
 spotify_artist_comp <- function(url) {
   # attempting to match given URL to Spotify artist
   spotify_artist <- tryCatch(

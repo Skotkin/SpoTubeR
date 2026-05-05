@@ -18,11 +18,10 @@
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with the auth_creds function before you can run examples
+#' # remember you must set up your API credentials with the auth_creds function
+#' #  before you can run examples
 #' # using Ordinary by Alex Warren
 #' match_yt_song("https://www.youtube.com/watch?v=u2ah9tWTkmk")
-#' # using Opalite by Taylor Swift
-#' match_yt_song("https://www.youtube.com/watch?v=1FVF-9KQiPo")
 match_yt_song <- function(url) {
   # attempting to match YouTube video to Spotify song and retrieving associated data
   output <- yt_to_spotify(url)

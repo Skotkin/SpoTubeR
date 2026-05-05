@@ -27,11 +27,10 @@ globalVariables(c("one_artist", "yt_channel"))
 #' @export
 #'
 #' @examples
-#' # remember you must set up your API credentials with the auth_creds function before you can run examples
+#' # remember you must set up your API credentials with the auth_creds function
+#' # before you can run examples
 #' # using Mercury Records
 #' label_comp("Mercury Records")
-#' # using Sony Music Entertainment
-#' label_comp("Sony Music Entertainment")
 label_comp <- function(label) {
   # retrieving 5 artists associated with the given record label
   # am using capture.output to suppress the print output that would otherwise be produced

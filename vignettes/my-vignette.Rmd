@@ -79,18 +79,7 @@ Sony_Nash_df |>
   knitr::kable(caption = "Label's Top 5 Artist's Info")
 ```
 
-Let's say I wanted to conduct my own analyses without using the top 100 data set
-
-### Match Spotify songs to their artist's YouTube music video with match_spotify_song
-
-```{r}
-# Using Noah Kahn's Stick Season
-SpoTubeR::match_spotify_song('https://open.spotify.com/track/0mflMxspEfB0VbI1kyLiAv?si=9c5d9964b777475d') |>
-  as.data.frame() |>
-  knitr::kable(caption = "Noah Kahan's Stick Season on Spotify vs YouTube", col.names = c("Spotify Popularity", "YouTube Views", "Match Confidence"))
-```
-
-How about the other way around?
+Let's say I wanted to conduct my own analyses without using the top 100 data set.
 
 ### Match YouTube music videos to their artist's Spotify song with match_yt_song
 ```{r}
